@@ -5,13 +5,13 @@ import {
   FileCheck, 
   UserCheck, 
   Car, 
-  Certificate, 
-  BirthCertificate, 
-  ExamForm, 
-  EShram, 
-  EPFO, 
-  GST, 
-  Job,
+  Award, 
+  Baby, 
+  GraduationCap, 
+  Users, 
+  Briefcase, 
+  Receipt, 
+  Search,
   Building,
   Landmark
 } from "lucide-react";
@@ -73,7 +73,7 @@ export const services: Service[] = [
     title: "Income/Caste/Domicile Certificate",
     description: "Apply for various government certificates",
     url: "https://serviceonline.gov.in", // Default URL, will use state-specific URL
-    icon: Certificate,
+    icon: Award,
     color: "bg-purple-500",
     requiresState: true
   },
@@ -82,7 +82,7 @@ export const services: Service[] = [
     title: "Birth/Death Certificate",
     description: "Apply for birth or death certificates",
     url: "https://serviceonline.gov.in", // Default URL, will use state-specific URL
-    icon: BirthCertificate,
+    icon: Baby,
     color: "bg-red-500",
     requiresState: true
   },
@@ -109,7 +109,7 @@ export const services: Service[] = [
     title: "Government Exam Forms",
     description: "Various government exam applications",
     url: "https://ssc.nic.in",
-    icon: ExamForm,
+    icon: GraduationCap,
     color: "bg-orange-500"
   },
   {
@@ -117,7 +117,7 @@ export const services: Service[] = [
     title: "E-Shram Card",
     description: "Registration for unorganized workers",
     url: "https://eshram.gov.in",
-    icon: EShram,
+    icon: Users,
     color: "bg-teal-500"
   },
   {
@@ -125,7 +125,7 @@ export const services: Service[] = [
     title: "EPFO/ESIC",
     description: "Manage PF and social security benefits",
     url: "https://unifiedportal-epfo.epfindia.gov.in",
-    icon: EPFO,
+    icon: Briefcase,
     color: "bg-blue-700"
   },
   {
@@ -133,7 +133,7 @@ export const services: Service[] = [
     title: "GST Services",
     description: "Registration, returns, and payments",
     url: "https://www.gst.gov.in",
-    icon: GST,
+    icon: Receipt,
     color: "bg-emerald-600"
   },
   {
@@ -141,7 +141,7 @@ export const services: Service[] = [
     title: "Latest Government Job Updates",
     description: "Current government job opportunities",
     url: "https://www.ncs.gov.in",
-    icon: Job,
+    icon: Search,
     color: "bg-cyan-600"
   }
 ];
