@@ -5,7 +5,8 @@ import SearchBar from '@/components/SearchBar';
 import ServicesGrid from '@/components/ServicesGrid';
 import HelpSection from '@/components/HelpSection';
 import StateSelector from '@/components/StateSelector';
-import { services, Service } from '@/data/services';
+import CategorySelector from '@/components/CategorySelector';
+import { services, Service, categories } from '@/data/services';
 import { getStateUrl } from '@/data/states';
 import { useToast } from '@/hooks/use-toast';
 
@@ -13,21 +14,28 @@ const Index = () => {
   const [filteredServices, setFilteredServices] = useState(services);
   const [selectedService, setSelectedService] = useState<Service | null>(null);
   const [selectedState, setSelectedState] = useState<string>('');
+  const [selectedCategory, setSelectedCategory] = useState<string>(categories[0].id);
+  const [searchQuery, setSearchQuery] = useState<string>('');
   const { toast } = useToast();
 
-  const handleSearch = (query: string) => {
-    if (!query) {
-      setFilteredServices(services);
-      return;
-    }
-
-    const filtered = services.filter(
-      (service) =>
-        service.title.toLowerCase().includes(query.toLowerCase()) ||
-        service.description.toLowerCase().includes(query.toLowerCase())
-    );
+  // Filter services when search query or category changes
+  useEffect(() => {
+    let result = services;
     
-    setFilteredServices(filtered);
+    // Apply search filter if query exists
+    if (searchQuery) {
+      result = result.filter(
+        (service) =>
+          service.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          service.description.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+    }
+    
+    setFilteredServices(result);
+  }, [searchQuery, selectedCategory]);
+
+  const handleSearch = (query: string) => {
+    setSearchQuery(query);
   };
 
   const handleStateSelect = (state: string) => {
@@ -36,6 +44,15 @@ const Index = () => {
       title: "State Selected",
       description: `You've selected ${state}. State-specific services are now available.`,
       duration: 3000,
+    });
+  };
+
+  const handleCategorySelect = (category: string) => {
+    setSelectedCategory(category);
+    toast({
+      title: "Category Selected",
+      description: `Showing ${categories.find(c => c.id === category)?.name} services.`,
+      duration: 2000,
     });
   };
 
@@ -98,6 +115,13 @@ const Index = () => {
             </div>
           </div>
           
+          <div className="mb-6">
+            <CategorySelector 
+              selectedCategory={selectedCategory}
+              onCategorySelect={handleCategorySelect}
+            />
+          </div>
+          
           {selectedState && (
             <div className="mb-4 p-3 bg-blue-50 border border-blue-200 rounded-lg">
               <p className="text-sm text-blue-800">
@@ -117,6 +141,7 @@ const Index = () => {
               services={filteredServices} 
               onServiceClick={handleServiceClick}
               selectedState={selectedState}
+              selectedCategory={selectedCategory}
             />
           )}
           

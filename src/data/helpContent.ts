@@ -1,4 +1,3 @@
-
 export interface DocumentRequirement {
   service: string;
   documents: string[];
@@ -12,6 +11,7 @@ export interface HelpContent {
 }
 
 export const helpContent: HelpContent[] = [
+  // Government Services help content
   {
     serviceId: "aadhaar",
     title: "Aadhaar Services Help",
@@ -226,6 +226,118 @@ export const helpContent: HelpContent[] = [
       "Address proof",
       "Experience certificates (if applicable)",
       "Category certificates (if applicable)"
+    ]
+  },
+  
+  // Education results help content
+  {
+    serviceId: "bihar-10th",
+    title: "Bihar 10th Result Help",
+    instructions: [
+      "Visit the official BSEB Matric Results website",
+      "Enter your roll code and roll number",
+      "Enter the security captcha if required",
+      "Submit to view your results",
+      "Download and print the result for your records"
+    ],
+    requiredDocuments: [
+      "BSEB Matric (10th) Roll Code",
+      "BSEB Matric (10th) Roll Number",
+      "Admit Card (for reference)"
+    ]
+  },
+  {
+    serviceId: "bihar-12th",
+    title: "Bihar 12th Result Help",
+    instructions: [
+      "Visit the official BSEB Inter Results website",
+      "Enter your roll code and roll number",
+      "Enter the security captcha if required",
+      "Submit to view your results",
+      "Download and print the result for your records"
+    ],
+    requiredDocuments: [
+      "BSEB Intermediate (12th) Roll Code",
+      "BSEB Intermediate (12th) Roll Number",
+      "Admit Card (for reference)"
+    ]
+  },
+  {
+    serviceId: "bihar-ofss",
+    title: "Bihar OFSS Admission Help",
+    instructions: [
+      "Visit the official OFSS Bihar website",
+      "Register for new account if first time user",
+      "Login with your credentials",
+      "Fill in personal and academic details",
+      "Select colleges and courses of preference",
+      "Pay the application fee and submit",
+      "Check status regularly for allotment"
+    ],
+    requiredDocuments: [
+      "10th Marksheet",
+      "Caste Certificate (if applicable)",
+      "Income Certificate (if applicable)",
+      "Domicile Certificate",
+      "Recent passport size photograph",
+      "Mobile number for OTP verification",
+      "Email ID"
+    ]
+  },
+  {
+    serviceId: "patliputra-university",
+    title: "Patliputra University Help",
+    instructions: [
+      "Visit the official university website",
+      "Navigate to Admissions/Examinations section",
+      "Check notices for admission/exam schedule",
+      "Download application forms if available",
+      "Submit application as per university guidelines"
+    ],
+    requiredDocuments: [
+      "Previous marksheet/certificate",
+      "Migration Certificate (if changing university)",
+      "Category Certificate (if applicable)",
+      "Domicile Certificate",
+      "Recent passport size photographs",
+      "ID proof"
+    ]
+  },
+  
+  // Admit Card help content
+  {
+    serviceId: "ssc-admit",
+    title: "SSC Admit Card Help",
+    instructions: [
+      "Visit the SSC Admit Card portal",
+      "Select the relevant examination",
+      "Enter your registration ID/roll number",
+      "Enter date of birth and required details",
+      "Enter captcha and submit",
+      "Download and print your admit card"
+    ],
+    requiredDocuments: [
+      "SSC Registration ID/Roll number",
+      "Date of Birth",
+      "Mobile number (used during registration)",
+      "Email ID (used during registration)"
+    ]
+  },
+  {
+    serviceId: "upsc-admit",
+    title: "UPSC Admit Card Help",
+    instructions: [
+      "Visit the UPSC Online portal",
+      "Navigate to e-Admit Card section",
+      "Select the relevant examination",
+      "Enter registration ID or roll number",
+      "Enter date of birth and captcha",
+      "Download and print your admit card"
+    ],
+    requiredDocuments: [
+      "UPSC Registration ID/Roll number",
+      "Date of Birth",
+      "Photo ID approved by UPSC for verification"
     ]
   }
 ];

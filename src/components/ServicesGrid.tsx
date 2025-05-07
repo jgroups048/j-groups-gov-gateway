@@ -7,12 +7,18 @@ interface ServicesGridProps {
   services: Service[];
   onServiceClick: (service: Service) => void;
   selectedState?: string;
+  selectedCategory?: string;
 }
 
-const ServicesGrid: React.FC<ServicesGridProps> = ({ services, onServiceClick, selectedState }) => {
+const ServicesGrid: React.FC<ServicesGridProps> = ({ services, onServiceClick, selectedState, selectedCategory }) => {
+  // Filter services by selected category
+  const filteredServices = selectedCategory 
+    ? services.filter(service => service.category === selectedCategory)
+    : services;
+  
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-      {services.map((service) => (
+      {filteredServices.map((service) => (
         <ServiceCard
           key={service.id}
           title={service.title}
