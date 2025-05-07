@@ -10,6 +10,8 @@ interface ServiceCardProps {
   icon: LucideIcon;
   color: string;
   onClick: () => void;
+  requiresState?: boolean;
+  selectedState?: string;
 }
 
 const ServiceCard: React.FC<ServiceCardProps> = ({
@@ -19,10 +21,15 @@ const ServiceCard: React.FC<ServiceCardProps> = ({
   icon: Icon,
   color,
   onClick,
+  requiresState = false,
+  selectedState,
 }) => {
   return (
     <div 
-      className="service-card bg-white rounded-xl overflow-hidden shadow-md border border-gray-200 h-full cursor-pointer"
+      className={cn(
+        "service-card bg-white rounded-xl overflow-hidden shadow-md border border-gray-200 h-full cursor-pointer",
+        requiresState && !selectedState ? "opacity-70" : ""
+      )}
       onClick={onClick}
     >
       <div className="p-5 flex flex-col h-full">
@@ -31,6 +38,21 @@ const ServiceCard: React.FC<ServiceCardProps> = ({
         </div>
         <h3 className="text-lg font-semibold mb-2">{title}</h3>
         <p className="text-gray-600 text-sm flex-grow">{description}</p>
+        
+        {requiresState && (
+          <div className="mt-2 mb-2">
+            {selectedState ? (
+              <span className="text-xs px-2 py-1 bg-blue-100 text-blue-800 rounded-full">
+                {selectedState}
+              </span>
+            ) : (
+              <span className="text-xs px-2 py-1 bg-yellow-100 text-yellow-800 rounded-full">
+                Select state first
+              </span>
+            )}
+          </div>
+        )}
+        
         <div className="mt-4">
           <span className="text-blue-600 text-sm font-medium inline-flex items-center">
             Visit Portal

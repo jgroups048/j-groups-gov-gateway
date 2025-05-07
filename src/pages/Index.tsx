@@ -1,15 +1,18 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Header from '@/components/Header';
 import SearchBar from '@/components/SearchBar';
 import ServicesGrid from '@/components/ServicesGrid';
 import HelpSection from '@/components/HelpSection';
+import StateSelector from '@/components/StateSelector';
 import { services, Service } from '@/data/services';
+import { getStateUrl } from '@/data/states';
 import { useToast } from '@/hooks/use-toast';
 
 const Index = () => {
   const [filteredServices, setFilteredServices] = useState(services);
   const [selectedService, setSelectedService] = useState<Service | null>(null);
+  const [selectedState, setSelectedState] = useState<string>('');
   const { toast } = useToast();
 
   const handleSearch = (query: string) => {
@@ -27,11 +30,39 @@ const Index = () => {
     setFilteredServices(filtered);
   };
 
+  const handleStateSelect = (state: string) => {
+    setSelectedState(state);
+    toast({
+      title: "State Selected",
+      description: `You've selected ${state}. State-specific services are now available.`,
+      duration: 3000,
+    });
+  };
+
   const handleServiceClick = (service: Service) => {
     setSelectedService(service);
     
+    // Check if service requires state selection
+    if (service.requiresState && !selectedState) {
+      toast({
+        title: "State Required",
+        description: "Please select your state first to access this service.",
+        duration: 3000,
+      });
+      return;
+    }
+
+    // Determine the correct URL to use
+    let serviceUrl = service.url;
+    if (service.requiresState && selectedState) {
+      const stateUrl = getStateUrl(selectedState);
+      if (stateUrl) {
+        serviceUrl = stateUrl;
+      }
+    }
+    
     // Open in new tab
-    window.open(service.url, '_blank');
+    window.open(serviceUrl, '_blank');
     
     toast({
       title: "Opening Portal",
@@ -54,7 +85,27 @@ const Index = () => {
             </p>
           </div>
 
-          <SearchBar onSearch={handleSearch} />
+          <div className="flex flex-col md:flex-row gap-4 items-center justify-between mb-6">
+            <div className="w-full md:w-2/3">
+              <SearchBar onSearch={handleSearch} />
+            </div>
+            
+            <div className="w-full md:w-auto">
+              <StateSelector 
+                selectedState={selectedState}
+                onStateSelect={handleStateSelect}
+              />
+            </div>
+          </div>
+          
+          {selectedState && (
+            <div className="mb-4 p-3 bg-blue-50 border border-blue-200 rounded-lg">
+              <p className="text-sm text-blue-800">
+                Showing services for <span className="font-medium">{selectedState}</span>. 
+                State-specific services will use your state's portal.
+              </p>
+            </div>
+          )}
           
           {filteredServices.length === 0 ? (
             <div className="text-center py-10">
@@ -64,7 +115,8 @@ const Index = () => {
           ) : (
             <ServicesGrid 
               services={filteredServices} 
-              onServiceClick={handleServiceClick} 
+              onServiceClick={handleServiceClick}
+              selectedState={selectedState}
             />
           )}
           

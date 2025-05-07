@@ -5,13 +5,15 @@ import {
   FileCheck, 
   UserCheck, 
   Car, 
-  FileText as Certificate, 
-  FileText as BirthCertificate, 
-  FileText as ExamForm, 
-  User as EShram, 
-  FileText as EPFO, 
-  FileText as GST, 
-  FileText as Job 
+  Certificate, 
+  BirthCertificate, 
+  ExamForm, 
+  EShram, 
+  EPFO, 
+  GST, 
+  Job,
+  Building,
+  Landmark
 } from "lucide-react";
 import { LucideIcon } from "lucide-react";
 
@@ -22,6 +24,7 @@ export interface Service {
   url: string;
   icon: LucideIcon;
   color: string;
+  requiresState?: boolean;
 }
 
 export const services: Service[] = [
@@ -69,17 +72,37 @@ export const services: Service[] = [
     id: "certificate",
     title: "Income/Caste/Domicile Certificate",
     description: "Apply for various government certificates",
-    url: "https://serviceonline.gov.in",
+    url: "https://serviceonline.gov.in", // Default URL, will use state-specific URL
     icon: Certificate,
-    color: "bg-purple-500"
+    color: "bg-purple-500",
+    requiresState: true
   },
   {
     id: "birth-death",
     title: "Birth/Death Certificate",
     description: "Apply for birth or death certificates",
-    url: "https://serviceonline.gov.in",
+    url: "https://serviceonline.gov.in", // Default URL, will use state-specific URL
     icon: BirthCertificate,
-    color: "bg-red-500"
+    color: "bg-red-500",
+    requiresState: true
+  },
+  {
+    id: "domicile",
+    title: "Domicile Certificate",
+    description: "Apply for state domicile certificate",
+    url: "https://serviceonline.gov.in", // Default URL, will use state-specific URL
+    icon: Landmark,
+    color: "bg-amber-600",
+    requiresState: true
+  },
+  {
+    id: "land-records",
+    title: "Land Records & Property",
+    description: "View land records, mutation, and property details",
+    url: "https://serviceonline.gov.in", // Default URL, will use state-specific URL
+    icon: Building,
+    color: "bg-lime-700",
+    requiresState: true
   },
   {
     id: "exams",
