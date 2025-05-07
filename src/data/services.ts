@@ -1,0 +1,124 @@
+
+import { 
+  FileText, 
+  User, 
+  FileCheck, 
+  UserCheck, 
+  Car, 
+  FileText as Certificate, 
+  FileText as BirthCertificate, 
+  FileText as ExamForm, 
+  User as EShram, 
+  FileText as EPFO, 
+  FileText as GST, 
+  FileText as Job 
+} from "lucide-react";
+import { LucideIcon } from "lucide-react";
+
+export interface Service {
+  id: string;
+  title: string;
+  description: string;
+  url: string;
+  icon: LucideIcon;
+  color: string;
+}
+
+export const services: Service[] = [
+  {
+    id: "aadhaar",
+    title: "Aadhaar Services",
+    description: "Update, download, or check Aadhaar status",
+    url: "https://uidai.gov.in",
+    icon: User,
+    color: "bg-blue-500"
+  },
+  {
+    id: "pan",
+    title: "PAN Card",
+    description: "Apply for new PAN or correct existing PAN",
+    url: "https://www.pan.utiitsl.com",
+    icon: FileText,
+    color: "bg-yellow-500"
+  },
+  {
+    id: "passport",
+    title: "Passport Services",
+    description: "Apply for passport or check application status",
+    url: "https://www.passportindia.gov.in",
+    icon: FileCheck,
+    color: "bg-indigo-600"
+  },
+  {
+    id: "voter",
+    title: "Voter ID",
+    description: "Registration, correction, and download of voter ID",
+    url: "https://voters.eci.gov.in",
+    icon: UserCheck,
+    color: "bg-pink-500"
+  },
+  {
+    id: "driving",
+    title: "Driving License & Vehicle",
+    description: "Apply for license, RC, and other vehicle services",
+    url: "https://parivahan.gov.in",
+    icon: Car,
+    color: "bg-green-600"
+  },
+  {
+    id: "certificate",
+    title: "Income/Caste/Domicile Certificate",
+    description: "Apply for various government certificates",
+    url: "https://serviceonline.gov.in",
+    icon: Certificate,
+    color: "bg-purple-500"
+  },
+  {
+    id: "birth-death",
+    title: "Birth/Death Certificate",
+    description: "Apply for birth or death certificates",
+    url: "https://serviceonline.gov.in",
+    icon: BirthCertificate,
+    color: "bg-red-500"
+  },
+  {
+    id: "exams",
+    title: "Government Exam Forms",
+    description: "Various government exam applications",
+    url: "https://ssc.nic.in",
+    icon: ExamForm,
+    color: "bg-orange-500"
+  },
+  {
+    id: "eshram",
+    title: "E-Shram Card",
+    description: "Registration for unorganized workers",
+    url: "https://eshram.gov.in",
+    icon: EShram,
+    color: "bg-teal-500"
+  },
+  {
+    id: "epfo",
+    title: "EPFO/ESIC",
+    description: "Manage PF and social security benefits",
+    url: "https://unifiedportal-epfo.epfindia.gov.in",
+    icon: EPFO,
+    color: "bg-blue-700"
+  },
+  {
+    id: "gst",
+    title: "GST Services",
+    description: "Registration, returns, and payments",
+    url: "https://www.gst.gov.in",
+    icon: GST,
+    color: "bg-emerald-600"
+  },
+  {
+    id: "jobs",
+    title: "Latest Government Job Updates",
+    description: "Current government job opportunities",
+    url: "https://www.ncs.gov.in",
+    icon: Job,
+    color: "bg-cyan-600"
+  }
+];

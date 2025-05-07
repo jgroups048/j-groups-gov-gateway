@@ -1,3 +1,4 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -13,7 +14,7 @@
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 84% 4.9%;
 
-    --primary: 222.2 47.4% 11.2%;
+    --primary: 210 100% 35%;
     --primary-foreground: 210 40% 98%;
 
     --secondary: 210 40% 96.1%;
@@ -88,6 +89,25 @@
     --sidebar-border: 240 3.7% 15.9%;
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
+
+  /* Custom animations */
+  @keyframes glow {
+    0%, 100% {
+      text-shadow: 0 0 5px rgba(59, 130, 246, 0.3);
+    }
+    50% {
+      text-shadow: 0 0 15px rgba(59, 130, 246, 0.8);
+    }
+  }
+
+  @keyframes float {
+    0%, 100% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(-5px);
+    }
+  }
 }
 
 @layer base {
@@ -98,4 +118,8 @@
   body {
     @apply bg-background text-foreground;
   }
+}
+
+.service-card {
+  @apply transition-all duration-300 hover:-translate-y-1 hover:shadow-lg;
 }
