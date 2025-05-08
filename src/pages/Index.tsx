@@ -9,6 +9,8 @@ import CategorySelector from '@/components/CategorySelector';
 import { services, Service, categories } from '@/data/services';
 import { getStateUrl } from '@/data/states';
 import { useToast } from '@/hooks/use-toast';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import { ChevronDown } from 'lucide-react';
 
 const Index = () => {
   const [filteredServices, setFilteredServices] = useState(services);
@@ -94,11 +96,11 @@ const Index = () => {
       
       <main className="flex-grow container mx-auto px-4 py-6">
         <div className="max-w-screen-xl mx-auto">
-          <div className="mb-8">
-            <h2 className="text-2xl font-bold text-gray-800 mb-4">Government Services Portal</h2>
-            <p className="text-gray-600">
+          <div className="bg-gradient-to-r from-blue-700 to-blue-900 text-white p-6 rounded-lg shadow-md mb-8">
+            <h2 className="text-2xl font-bold mb-2">Government Services Portal</h2>
+            <p className="text-blue-100">
               Access all essential government services through our user-friendly portal. 
-              Click on any service to visit the official website.
+              Select your state to access local services or use the search to find specific services quickly.
             </p>
           </div>
 
@@ -123,35 +125,101 @@ const Index = () => {
           </div>
           
           {selectedState && (
-            <div className="mb-4 p-3 bg-blue-50 border border-blue-200 rounded-lg">
-              <p className="text-sm text-blue-800">
-                Showing services for <span className="font-medium">{selectedState}</span>. 
-                State-specific services will use your state's portal.
+            <div className="mb-6 p-4 bg-blue-50 border-l-4 border-blue-500 rounded-lg">
+              <p className="text-sm text-blue-800 flex items-center">
+                <span className="font-medium mr-2">📍 {selectedState}</span> 
+                services are active. State-specific portals will use your state's official website.
               </p>
             </div>
           )}
           
-          {filteredServices.length === 0 ? (
-            <div className="text-center py-10">
-              <h3 className="text-xl text-gray-600">No services found matching your search.</h3>
-              <p className="text-gray-500 mt-2">Please try a different search term.</p>
-            </div>
-          ) : (
-            <ServicesGrid 
-              services={filteredServices} 
-              onServiceClick={handleServiceClick}
-              selectedState={selectedState}
-              selectedCategory={selectedCategory}
-            />
-          )}
+          <ServicesGrid 
+            services={filteredServices} 
+            onServiceClick={handleServiceClick}
+            selectedState={selectedState}
+            selectedCategory={selectedCategory}
+          />
+          
+          <div className="mt-10 mb-6">
+            <Collapsible>
+              <div className="flex items-center justify-between bg-white p-4 rounded-lg shadow-sm border border-gray-200 mb-4">
+                <h3 className="text-xl font-semibold text-gray-800">Common Service Requests</h3>
+                <CollapsibleTrigger className="p-2 hover:bg-gray-100 rounded-full transition-colors">
+                  <ChevronDown className="h-5 w-5" />
+                </CollapsibleTrigger>
+              </div>
+              
+              <CollapsibleContent>
+                <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                      <h4 className="text-lg font-medium text-blue-700 mb-3">Identity Documents</h4>
+                      <ul className="space-y-2 text-sm">
+                        <li className="p-2 bg-gray-50 rounded-md">"I want to apply for a PAN card."</li>
+                        <li className="p-2 bg-gray-50 rounded-md">"Help me update my Aadhaar card address."</li>
+                        <li className="p-2 bg-gray-50 rounded-md">"Download my voter ID card."</li>
+                      </ul>
+                    </div>
+                    
+                    <div>
+                      <h4 className="text-lg font-medium text-green-700 mb-3">Education & Admissions</h4>
+                      <ul className="space-y-2 text-sm">
+                        <li className="p-2 bg-gray-50 rounded-md">"Check my Bihar Board 10th result."</li>
+                        <li className="p-2 bg-gray-50 rounded-md">"Apply for 11th admission using OFSS Bihar."</li>
+                        <li className="p-2 bg-gray-50 rounded-md">"Download admit card for BPSC exam."</li>
+                      </ul>
+                    </div>
+                    
+                    <div>
+                      <h4 className="text-lg font-medium text-amber-700 mb-3">Certificates</h4>
+                      <ul className="space-y-2 text-sm">
+                        <li className="p-2 bg-gray-50 rounded-md">"Apply for a caste certificate in Bihar."</li>
+                        <li className="p-2 bg-gray-50 rounded-md">"I need an income certificate in UP."</li>
+                        <li className="p-2 bg-gray-50 rounded-md">"Get a domicile certificate for college."</li>
+                      </ul>
+                    </div>
+                    
+                    <div>
+                      <h4 className="text-lg font-medium text-purple-700 mb-3">Employment & Jobs</h4>
+                      <ul className="space-y-2 text-sm">
+                        <li className="p-2 bg-gray-50 rounded-md">"Apply for SSC CHSL exam."</li>
+                        <li className="p-2 bg-gray-50 rounded-md">"Register me for an E-Shram card."</li>
+                        <li className="p-2 bg-gray-50 rounded-md">"Apply for MSME Udyam certificate."</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </CollapsibleContent>
+            </Collapsible>
+          </div>
           
           <HelpSection selectedService={selectedService} />
         </div>
       </main>
       
-      <footer className="bg-gray-100 border-t border-gray-200 py-4">
-        <div className="container mx-auto px-4 text-center text-gray-600 text-sm">
-          <p>© 2025 J GROUPS Enterprises. All rights reserved.</p>
+      <footer className="bg-gray-100 border-t border-gray-200 py-6">
+        <div className="container mx-auto px-4">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-center md:text-left">
+            <div>
+              <h3 className="text-lg font-semibold mb-3 text-gray-800">J GROUPS Enterprises</h3>
+              <p className="text-sm text-gray-600">Your Trusted Digital Seva Partner Since 2020</p>
+              <p className="text-sm text-gray-600 mt-2">© 2025 All rights reserved.</p>
+            </div>
+            
+            <div>
+              <h3 className="text-lg font-semibold mb-3 text-gray-800">Contact Us</h3>
+              <p className="text-sm text-gray-600">Email: info@jgroups.in</p>
+              <p className="text-sm text-gray-600">Phone: +91 9876543210</p>
+            </div>
+            
+            <div>
+              <h3 className="text-lg font-semibold mb-3 text-gray-800">Disclaimer</h3>
+              <p className="text-sm text-gray-600">
+                All government trademarks and links belong to their respective owners. 
+                J GROUPS is a service platform.
+              </p>
+            </div>
+          </div>
         </div>
       </footer>
     </div>

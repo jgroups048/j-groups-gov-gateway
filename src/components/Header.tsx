@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Download } from 'lucide-react';
+import { Download, ExternalLink } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
 
@@ -28,16 +28,23 @@ const Header: React.FC = () => {
   };
 
   return (
-    <header className="sticky top-0 z-10 bg-gradient-to-r from-blue-700 to-blue-900 text-white shadow-md">
+    <header className="sticky top-0 z-10 bg-gradient-to-r from-blue-700 to-blue-800 text-white shadow-md">
       <div className="container mx-auto px-4 py-3 flex justify-between items-center">
         <div className="flex items-center">
-          <h1 className="text-xl md:text-2xl lg:text-3xl font-bold animate-[glow_2s_ease-in-out_infinite]">
-            <Link to="/">J GROUPS Enterprises</Link>
+          <h1 className="text-xl md:text-2xl lg:text-3xl font-bold animate-[glow_2s_ease-in-out_infinite] relative">
+            <Link to="/" className="flex items-center">
+              <span className="mr-2">🏛️</span>
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-white to-blue-100">
+                J GROUPS Enterprises
+              </span>
+            </Link>
+            <div className="absolute h-1 w-1/2 bottom-0 left-0 bg-gradient-to-r from-transparent to-white/40 rounded"></div>
           </h1>
           <p className="hidden md:block ml-4 text-sm text-blue-100">Your Trusted Digital Seva Partner Since 2020</p>
         </div>
         <div className="flex items-center space-x-4">
-          <Link to="/about" className="bg-blue-600 hover:bg-blue-500 px-3 py-1 rounded-md text-sm font-medium transition-colors">
+          <Link to="/about" className="bg-blue-600/80 hover:bg-blue-500 px-3 py-1 rounded-md text-sm font-medium transition-colors flex items-center">
+            <ExternalLink className="h-3.5 w-3.5 mr-1" />
             About Us
           </Link>
           <Button 
