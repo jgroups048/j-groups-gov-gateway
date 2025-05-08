@@ -8,7 +8,7 @@ import {
   GraduationCap, 
   Wallet, 
   Briefcase, 
-  Tool 
+  Wrench 
 } from 'lucide-react';
 
 interface CategorySelectorProps {
@@ -27,7 +27,7 @@ const CategorySelector: React.FC<CategorySelectorProps> = ({
     student: <GraduationCap className="h-4 w-4" />,
     financial: <Wallet className="h-4 w-4" />,
     jobs: <Briefcase className="h-4 w-4" />,
-    tools: <Tool className="h-4 w-4" />
+    tools: <Wrench className="h-4 w-4" />
   };
 
   return (

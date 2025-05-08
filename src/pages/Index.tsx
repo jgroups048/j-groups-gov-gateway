@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import Header from '@/components/Header';
 import SearchBar from '@/components/SearchBar';
@@ -6,6 +5,7 @@ import ServicesGrid from '@/components/ServicesGrid';
 import HelpSection from '@/components/HelpSection';
 import StateSelector from '@/components/StateSelector';
 import CategorySelector from '@/components/CategorySelector';
+import WelcomePaymentBanner from '@/components/WelcomePaymentBanner';
 import { services, Service, categories } from '@/data/services';
 import { getStateUrl } from '@/data/states';
 import { useToast } from '@/hooks/use-toast';
@@ -96,13 +96,7 @@ const Index = () => {
       
       <main className="flex-grow container mx-auto px-4 py-6">
         <div className="max-w-screen-xl mx-auto">
-          <div className="bg-gradient-to-r from-blue-700 to-blue-900 text-white p-6 rounded-lg shadow-md mb-8">
-            <h2 className="text-2xl font-bold mb-2">Government Services Portal</h2>
-            <p className="text-blue-100">
-              Access all essential government services through our user-friendly portal. 
-              Select your state to access local services or use the search to find specific services quickly.
-            </p>
-          </div>
+          <WelcomePaymentBanner />
 
           <div className="flex flex-col md:flex-row gap-4 items-center justify-between mb-6">
             <div className="w-full md:w-2/3">
