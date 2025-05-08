@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
@@ -7,11 +6,13 @@ import { CreditCard } from 'lucide-react';
 interface RazorpayButtonProps {
   amount?: number; // in rupees
   onSuccess?: () => void;
+  buttonText?: string; // Added new prop for button text
 }
 
 const RazorpayButton: React.FC<RazorpayButtonProps> = ({ 
   amount = 20, 
-  onSuccess 
+  onSuccess,
+  buttonText = `Click Here to Pay ₹${amount}` // Default text if not provided
 }) => {
   const { toast } = useToast();
 
@@ -77,7 +78,7 @@ const RazorpayButton: React.FC<RazorpayButtonProps> = ({
       className="bg-blue-600 hover:bg-blue-700 text-white font-medium shadow-sm transition-all flex items-center gap-2"
     >
       <CreditCard className="h-4 w-4" />
-      Click Here to Pay ₹{amount}
+      {buttonText}
     </Button>
   );
 };

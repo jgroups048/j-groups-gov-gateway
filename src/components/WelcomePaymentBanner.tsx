@@ -42,13 +42,6 @@ const WelcomePaymentBanner: React.FC = () => {
       <div className="absolute inset-0 bg-blue-600 opacity-20 pattern-grid-lg"></div>
       <div className="relative z-10">
         <h2 className="text-2xl font-bold mb-3">Welcome to J GROUPS Enterprises</h2>
-        <p className="text-blue-100 mb-4">
-          Your one-stop AI-powered platform for all Indian government services.
-          We support: Aadhaar update, PAN card, Voter ID, Driving License, Passport, 
-          Certificates (Income, Caste, Domicile, Birth/Death), Government Exam Forms, 
-          E-Shram, GST, EPFO, and University Admissions.
-        </p>
-        
         {hasPaid ? (
           <div className="bg-green-600/80 p-4 rounded-md mt-4 shadow-sm">
             <p className="font-medium">
@@ -63,12 +56,9 @@ const WelcomePaymentBanner: React.FC = () => {
         ) : (
           <div className="mt-4">
             <p className="mb-3 text-blue-100">
-              To start any service, pay a ₹20 platform fee below, then type what you want like:
-              <br/>'I want to update my Aadhaar card' or
-              <br/>'Apply for PAN card' or
-              <br/>'Check Bihar Board 12th result'
+              Before we begin your selected service (Aadhaar, PAN, Driving License, Exam Forms, etc.), please pay a one-time ₹20 platform fee to continue.
             </p>
-            <RazorpayButton onSuccess={handlePaymentSuccess} />
+            <RazorpayButton onSuccess={handlePaymentSuccess} buttonText="Pay ₹20 to Continue" />
           </div>
         )}
       </div>
