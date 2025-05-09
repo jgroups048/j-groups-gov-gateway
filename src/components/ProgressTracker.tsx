@@ -9,7 +9,7 @@ interface Step {
 }
 
 interface ProgressTrackerProps {
-  steps: Step[];
+  steps: readonly Step[] | Step[]; // Updated to accept readonly arrays
   currentStepId: string;
 }
 
