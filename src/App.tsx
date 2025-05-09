@@ -9,6 +9,9 @@ import Index from "./pages/Index";
 import About from "./pages/About";
 import NotFound from "./pages/NotFound";
 import SplashScreen from "./components/SplashScreen";
+import Dashboard from "./pages/Dashboard";
+import ServicePage from "./pages/ServicePage";
+import Admin from "./pages/Admin";
 
 const queryClient = new QueryClient();
 
@@ -46,8 +49,11 @@ const App = () => {
         ) : (
           <BrowserRouter>
             <Routes>
-              <Route path="/" element={<Index />} />
+              <Route path="/" element={<Dashboard />} />
+              <Route path="/services" element={<Index />} />
               <Route path="/about" element={<About />} />
+              <Route path="/admin" element={<Admin />} />
+              <Route path="/service/:serviceId" element={<ServicePage />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>
