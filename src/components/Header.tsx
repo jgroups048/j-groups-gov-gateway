@@ -1,12 +1,22 @@
 
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Download, ExternalLink } from 'lucide-react';
+import { Download, ExternalLink, User, LogOut, Settings } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
+import { useAuth } from '@/contexts/AuthContext';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
 
 const Header: React.FC = () => {
   const { toast } = useToast();
+  const { user, signOut, isAdmin } = useAuth();
 
   const handleDownload = () => {
     // Show a toast notification
@@ -46,6 +56,45 @@ const Header: React.FC = () => {
             <Download className="h-4 w-4 mr-1" />
             <span className="hidden sm:inline">Download J GROUPS App</span>
           </a>
+
+          {user ? (
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="outline" className="border-white text-white hover:bg-blue-600 hover:text-white">
+                  <User className="h-4 w-4 mr-2" />
+                  {user.email?.split('@')[0]}
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem>
+                  <Link to="/profile" className="flex items-center w-full">
+                    <User className="mr-2 h-4 w-4" />
+                    Profile
+                  </Link>
+                </DropdownMenuItem>
+                {isAdmin && (
+                  <DropdownMenuItem>
+                    <Link to="/admin" className="flex items-center w-full">
+                      <Settings className="mr-2 h-4 w-4" />
+                      Admin Dashboard
+                    </Link>
+                  </DropdownMenuItem>
+                )}
+                <DropdownMenuItem onClick={signOut}>
+                  <LogOut className="mr-2 h-4 w-4" />
+                  Sign Out
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          ) : (
+            <Link to="/auth/login">
+              <Button variant="outline" className="border-white text-white hover:bg-blue-600 hover:text-white">
+                Sign In
+              </Button>
+            </Link>
+          )}
         </div>
       </div>
     </header>
