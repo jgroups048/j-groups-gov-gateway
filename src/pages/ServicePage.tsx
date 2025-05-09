@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import Header from '@/components/Header';
@@ -84,14 +83,14 @@ const ServicePage: React.FC = () => {
   // Check if the user has paid the service fee
   const [hasServiceFeePaid, setHasServiceFeePaid] = useState<boolean>(false);
   
-  // Progress steps
+  // Progress steps - fixing the status type to use the specific string literals
   const progressSteps = [
     { id: 'prompt', label: 'Details', status: currentStep === 'prompt' ? 'current' : currentStep === 'documents' || currentStep === 'payment' || currentStep === 'otp' || currentStep === 'completed' ? 'completed' : 'pending' },
     { id: 'documents', label: 'Documents', status: currentStep === 'documents' ? 'current' : currentStep === 'payment' || currentStep === 'otp' || currentStep === 'completed' ? 'completed' : 'pending' },
     { id: 'payment', label: 'Payment', status: currentStep === 'payment' ? 'current' : currentStep === 'otp' || currentStep === 'completed' ? 'completed' : 'pending' },
     { id: 'otp', label: 'Verification', status: currentStep === 'otp' ? 'current' : currentStep === 'completed' ? 'completed' : 'pending' },
     { id: 'completed', label: 'Complete', status: currentStep === 'completed' ? 'current' : 'pending' }
-  ];
+  ] as const;
   
   const handlePlatformFeeSuccess = () => {
     setHasPaid(true);

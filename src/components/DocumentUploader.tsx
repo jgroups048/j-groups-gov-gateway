@@ -1,9 +1,8 @@
-
 import React, { useState } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
-import { Upload, X, File, CheckCircle2 } from 'lucide-react';
+import { Upload, X, File, CheckCircle2, Loader2 } from 'lucide-react';
 
 interface DocumentUploaderProps {
   requiredDocuments: Array<{
