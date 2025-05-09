@@ -15,16 +15,6 @@ const Header: React.FC = () => {
       description: "Your download will start automatically. Once downloaded, you can install it for app mode.",
       duration: 5000,
     });
-
-    // Create a manifest.json file URL
-    const manifestUrl = `${window.location.origin}/manifest.json`;
-
-    // Simulate app download by opening a new tab
-    // In a real PWA, this would be handled by the service worker
-    const newTab = window.open(manifestUrl, '_blank');
-    if (newTab) {
-      newTab.focus();
-    }
   };
 
   return (
@@ -47,14 +37,15 @@ const Header: React.FC = () => {
             <ExternalLink className="h-3.5 w-3.5 mr-1" />
             About Us
           </Link>
-          <Button 
-            variant="outline" 
-            className="flex items-center gap-1 text-white border-white hover:bg-blue-500" 
+          <a 
+            href="https://raw.githubusercontent.com/jgroups048/j-groups-gov-gateway/main/J%20GROUPS%20Enterprises_1_1.0.apk"
+            download="J_GROUPS_Enterprises.apk"
             onClick={handleDownload}
+            className="bg-blue-500 hover:bg-blue-600 text-white font-medium px-3 py-2 rounded-md transition-colors flex items-center"
           >
-            <Download className="h-4 w-4" />
-            <span className="hidden sm:inline">Download App</span>
-          </Button>
+            <Download className="h-4 w-4 mr-1" />
+            <span className="hidden sm:inline">Download J GROUPS App</span>
+          </a>
         </div>
       </div>
     </header>
