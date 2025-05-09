@@ -5,8 +5,10 @@ import { useNavigate } from 'react-router-dom';
 import { supabase } from '@/lib/supabaseClient';
 import { useToast } from '@/hooks/use-toast';
 
+type Role = 'admin' | 'user' | 'premium';
+
 interface UserData extends User {
-  role?: 'admin' | 'user' | 'premium';
+  role?: Role;
 }
 
 interface AuthContextProps {
@@ -63,12 +65,18 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           .single();
           
         if (!userError && userData) {
+          // Ensure the role is one of the allowed types
+          const userRole = userData.role as Role;
           setUser({
             ...session.user,
-            role: userData.role
+            role: userRole
           });
         } else {
-          setUser(session.user);
+          // Set default role as 'user' if no role found
+          setUser({
+            ...session.user,
+            role: 'user' as Role
+          });
         }
       }
       
@@ -90,9 +98,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
             .eq('user_id', newSession.user.id)
             .single();
             
+          const userRole = (userData?.role || 'user') as Role;
+          
           setUser({
             ...newSession.user,
-            role: userData?.role || 'user' // Default to 'user' if no role found
+            role: userRole
           });
           
           toast({
