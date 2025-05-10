@@ -1,16 +1,41 @@
+
 import React, { useState, useEffect } from 'react';
 import Header from '@/components/Header';
+import ImageSlider from '@/components/ImageSlider';
 import SearchBar from '@/components/SearchBar';
 import ServicesGrid from '@/components/ServicesGrid';
 import HelpSection from '@/components/HelpSection';
 import StateSelector from '@/components/StateSelector';
 import CategorySelector from '@/components/CategorySelector';
-import WelcomePaymentBanner from '@/components/WelcomePaymentBanner';
 import { services, Service, categories } from '@/data/services';
 import { getStateUrl } from '@/data/states';
 import { useToast } from '@/hooks/use-toast';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { ChevronDown } from 'lucide-react';
+
+// Define slider images
+const sliderImages = [
+  {
+    src: '/lovable-uploads/c9d627ba-a002-49d3-b05d-1b1007a62f01.png',
+    alt: 'Digital India Initiative'
+  },
+  {
+    src: '/lovable-uploads/002488bb-3ca1-405e-81ec-86819c8eeaf5.png',
+    alt: 'Digital India Services'
+  },
+  {
+    src: '/lovable-uploads/010d08a8-a659-453c-8eee-62302e1645f6.png',
+    alt: 'Digital Seva Portal'
+  },
+  {
+    src: 'https://images.unsplash.com/photo-1542744173-05336fcc7ad4?q=80&w=1074',
+    alt: 'Government Services Online'
+  },
+  {
+    src: 'https://images.unsplash.com/photo-1485452499676-62ab02c20e83?q=80&w=1170',
+    alt: 'Digital Documentation'
+  }
+];
 
 const Index = () => {
   const [filteredServices, setFilteredServices] = useState(services);
@@ -96,8 +121,11 @@ const Index = () => {
       
       <main className="flex-grow container mx-auto px-4 py-6">
         <div className="max-w-screen-xl mx-auto">
-          <WelcomePaymentBanner />
-
+          {/* Image Slider */}
+          <div className="mb-8">
+            <ImageSlider images={sliderImages} autoSlideInterval={5000} />
+          </div>
+          
           <div className="flex flex-col md:flex-row gap-4 items-center justify-between mb-6">
             <div className="w-full md:w-2/3">
               <SearchBar onSearch={handleSearch} />
