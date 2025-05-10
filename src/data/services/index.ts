@@ -1,5 +1,6 @@
 
-import { Service, categories } from "../serviceTypes";
+import type { Service } from "../serviceTypes";
+import { categories } from "../serviceTypes";
 import { identityServices } from "./identityServices";
 import { certificateServices } from "./certificateServices";
 import { studentServices } from "./studentServices";
@@ -17,4 +18,5 @@ const services: Service[] = [
   ...toolsServices
 ];
 
-export { services, categories, Service };
+export { services, categories };
+export type { Service };
