@@ -1,8 +1,38 @@
 
-import { Landmark } from "lucide-react";
+import { Landmark, FileText } from "lucide-react";
 import { Service } from "../serviceTypes";
 
 export const certificateServices: Service[] = [
+  {
+    id: "income-certificate",
+    title: "Income Certificate",
+    description: "Apply for state income certificate",
+    url: "#",
+    icon: FileText,
+    color: "bg-indigo-600",
+    category: "certificates",
+    requiresState: true
+  },
+  {
+    id: "domicile-certificate",
+    title: "Domicile Certificate",
+    description: "Apply for state domicile/residence proof",
+    url: "#",
+    icon: FileText,
+    color: "bg-purple-600",
+    category: "certificates",
+    requiresState: true
+  },
+  {
+    id: "caste-certificate",
+    title: "Caste Certificate",
+    description: "Apply for state caste certificate",
+    url: "#",
+    icon: FileText,
+    color: "bg-amber-600",
+    category: "certificates",
+    requiresState: true
+  },
   {
     id: "bihar-rtps",
     title: "Bihar RTPS",

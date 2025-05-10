@@ -5,7 +5,7 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import Index from "./pages/Index";
+import HomePage from "./pages/HomePage";
 import About from "./pages/About";
 import NotFound from "./pages/NotFound";
 import SplashScreen from "./components/SplashScreen";
@@ -77,11 +77,12 @@ const AppRoutes = () => {
         <SplashScreen onFinish={handleSplashFinish} />
       ) : (
         <Routes>
-          <Route path="/" element={<Dashboard />} />
-          <Route path="/services" element={<Index />} />
+          <Route path="/" element={<HomePage />} />
+          <Route path="/services" element={<HomePage />} />
           <Route path="/about" element={<About />} />
           <Route path="/admin" element={<Admin />} />
           <Route path="/service/:serviceId" element={<ServicePage />} />
+          <Route path="/dashboard" element={<Dashboard />} />
           
           {/* Auth Routes */}
           <Route path="/auth/login" element={<Login />} />
