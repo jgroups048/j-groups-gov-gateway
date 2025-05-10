@@ -1,23 +1,13 @@
 
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Download, ExternalLink, User, LogOut, Settings } from 'lucide-react';
+import { Download, ExternalLink } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
-import { useAuth } from '@/contexts/AuthContext';
 import { useIsMobile } from '@/hooks/use-mobile';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
 
 const Header: React.FC = () => {
   const { toast } = useToast();
-  const { user, signOut, isAdmin } = useAuth();
   const isMobile = useIsMobile();
 
   const handleDownload = () => {
@@ -62,45 +52,6 @@ const Header: React.FC = () => {
               <span className="hidden sm:inline">Download App</span>
               <span className="sm:hidden">App</span>
             </a>
-
-            {user ? (
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button variant="outline" size="sm" className="border-white text-white hover:bg-blue-600 hover:text-white">
-                    <User className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2" />
-                    <span className="hidden sm:inline">{user.email?.split('@')[0]}</span>
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="end">
-                  <DropdownMenuLabel>My Account</DropdownMenuLabel>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem>
-                    <Link to="/profile" className="flex items-center w-full">
-                      <User className="mr-2 h-4 w-4" />
-                      Profile
-                    </Link>
-                  </DropdownMenuItem>
-                  {isAdmin && (
-                    <DropdownMenuItem>
-                      <Link to="/admin" className="flex items-center w-full">
-                        <Settings className="mr-2 h-4 w-4" />
-                        Admin Dashboard
-                      </Link>
-                    </DropdownMenuItem>
-                  )}
-                  <DropdownMenuItem onClick={signOut}>
-                    <LogOut className="mr-2 h-4 w-4" />
-                    Sign Out
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
-            ) : (
-              <Link to="/auth/login">
-                <Button variant="outline" size="sm" className="border-white text-white hover:bg-blue-600 hover:text-white">
-                  Sign In
-                </Button>
-              </Link>
-            )}
           </div>
         </div>
       </div>
