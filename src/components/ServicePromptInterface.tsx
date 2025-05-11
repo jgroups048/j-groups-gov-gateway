@@ -88,7 +88,7 @@ const ServicePromptInterface: React.FC = () => {
       setProgress(60);
       
       // Save the request to Supabase
-      const { data, error } = await saveServiceRequest(extractedData as ServiceRequest);
+      const { data, error } = await saveServiceRequest(extractedData);
       
       if (error) {
         throw new Error(`Error saving request: ${error.message}`);

@@ -1,14 +1,16 @@
 
+import { ServiceRequest } from "@/services/requestService";
+
 /**
  * Extract structured data from a user prompt about government service requests
  * @param prompt The user's natural language prompt
  * @returns Structured data extracted from the prompt
  */
-export async function extractDataFromPrompt(prompt: string) {
+export async function extractDataFromPrompt(prompt: string): Promise<ServiceRequest> {
   try {
     // Simple rule-based extraction for demo purposes
     // In production, you would use an actual NLP service or LLM API
-    const data: Record<string, any> = {
+    const data: ServiceRequest = {
       full_name: '',
       service_type: '',
       action_type: 'apply',
@@ -105,6 +107,7 @@ export async function extractDataFromPrompt(prompt: string) {
     return data;
   } catch (error) {
     console.error("Error extracting data from prompt:", error);
+    // Return a valid ServiceRequest object with minimum required fields
     return {
       full_name: '',
       service_type: 'Unknown',
