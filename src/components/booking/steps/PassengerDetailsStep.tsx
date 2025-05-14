@@ -61,10 +61,13 @@ const PassengerDetailsStep = ({ onNext, onBack }: PassengerDetailsStepProps) => 
   });
 
   const onSubmit = (data: FormValues) => {
-    // Parse age to number before saving
+    // Create the passengerDetails object with all required fields explicitly
     const passengerDetails = {
-      ...data,
-      age: parseInt(data.age, 10)
+      fullName: data.fullName,  // Ensure these are not optional
+      age: parseInt(data.age, 10),
+      gender: data.gender,
+      travelClass: data.travelClass,
+      mobile: data.mobile
     };
     
     updateBookingDetails({ passengerDetails });
