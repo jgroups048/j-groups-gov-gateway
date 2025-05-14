@@ -9,7 +9,78 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
-      [_ in never]: never
+      user_requests: {
+        Row: {
+          aadhaar: string | null
+          action_type: string
+          address: string | null
+          created_at: string | null
+          dob: string | null
+          father_name: string | null
+          full_name: string
+          id: string
+          mobile: string | null
+          receipt_url: string | null
+          service_type: string
+          status: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          aadhaar?: string | null
+          action_type: string
+          address?: string | null
+          created_at?: string | null
+          dob?: string | null
+          father_name?: string | null
+          full_name: string
+          id?: string
+          mobile?: string | null
+          receipt_url?: string | null
+          service_type: string
+          status?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          aadhaar?: string | null
+          action_type?: string
+          address?: string | null
+          created_at?: string | null
+          dob?: string | null
+          father_name?: string | null
+          full_name?: string
+          id?: string
+          mobile?: string | null
+          receipt_url?: string | null
+          service_type?: string
+          status?: string | null
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
+      user_roles: {
+        Row: {
+          created_at: string | null
+          id: string
+          role: string
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          role: string
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          role?: string
+          updated_at?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never

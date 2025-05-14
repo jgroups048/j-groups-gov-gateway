@@ -21,9 +21,10 @@ export interface ServiceRequest {
  * Save a service request to the database
  */
 export async function saveServiceRequest(request: ServiceRequest): Promise<{ data: any; error: any }> {
+  // Type assertion to work around TypeScript issues
   const { data, error } = await supabase
     .from('user_requests')
-    .insert(request)
+    .insert(request as any)
     .select()
     .single();
   
@@ -34,19 +35,21 @@ export async function saveServiceRequest(request: ServiceRequest): Promise<{ dat
  * Get a service request by ID
  */
 export async function getServiceRequest(id: string): Promise<{ data: ServiceRequest | null; error: any }> {
+  // Type assertion to work around TypeScript issues
   const { data, error } = await supabase
     .from('user_requests')
     .select()
     .eq('id', id)
     .single();
   
-  return { data, error };
+  return { data: data as ServiceRequest | null, error };
 }
 
 /**
  * Poll for updates to a service request
  */
 export async function checkServiceRequestStatus(id: string): Promise<{ status: string; receipt_url: string | null }> {
+  // Type assertion to work around TypeScript issues
   const { data, error } = await supabase
     .from('user_requests')
     .select('status, receipt_url')

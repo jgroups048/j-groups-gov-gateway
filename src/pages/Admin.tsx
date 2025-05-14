@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { supabase } from "@/integrations/supabase/client";
 import { ServiceRequest } from '@/services/requestService';
@@ -33,20 +32,30 @@ const Admin: React.FC = () => {
   const fetchRequests = async () => {
     setLoading(true);
     
-    const { data, error } = await supabase
-      .from('user_requests')
-      .select('*')
-      .order('created_at', { ascending: false });
-      
-    if (error) {
-      console.error("Error fetching requests:", error);
+    try {
+      // Type assertion to work around TypeScript issues
+      const { data, error } = await supabase
+        .from('user_requests')
+        .select('*')
+        .order('created_at', { ascending: false }) as { data: ServiceRequest[] | null, error: any };
+        
+      if (error) {
+        console.error("Error fetching requests:", error);
+        toast({
+          title: "Error",
+          description: "Failed to load service requests",
+          variant: "destructive",
+        });
+      } else {
+        setRequests(data || []);
+      }
+    } catch (err) {
+      console.error("Exception fetching requests:", err);
       toast({
         title: "Error",
         description: "Failed to load service requests",
         variant: "destructive",
       });
-    } else {
-      setRequests(data || []);
     }
     
     setLoading(false);
@@ -59,26 +68,39 @@ const Admin: React.FC = () => {
 
   // Update request status
   const updateStatus = async (id: string, status: string) => {
-    const { error } = await supabase
-      .from('user_requests')
-      .update({ status, updated_at: new Date().toISOString() })
-      .eq('id', id);
-      
-    if (error) {
-      console.error("Error updating status:", error);
+    try {
+      // Type assertion to work around TypeScript issues
+      const { error } = await supabase
+        .from('user_requests')
+        .update({ 
+          status, 
+          updated_at: new Date().toISOString() 
+        } as any)
+        .eq('id', id);
+        
+      if (error) {
+        console.error("Error updating status:", error);
+        toast({
+          title: "Error",
+          description: "Failed to update request status",
+          variant: "destructive",
+        });
+      } else {
+        toast({
+          title: "Status Updated",
+          description: `Request status changed to ${status}`,
+        });
+        
+        // Refresh the requests list
+        fetchRequests();
+      }
+    } catch (err) {
+      console.error("Exception updating status:", err);
       toast({
         title: "Error",
         description: "Failed to update request status",
         variant: "destructive",
       });
-    } else {
-      toast({
-        title: "Status Updated",
-        description: `Request status changed to ${status}`,
-      });
-      
-      // Refresh the requests list
-      fetchRequests();
     }
   };
 

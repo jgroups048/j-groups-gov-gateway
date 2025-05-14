@@ -57,22 +57,32 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       if (session) {
         setSession(session);
         
-        // Get user with role information
-        const { data: userData, error: userError } = await supabase
-          .from('user_roles')
-          .select('role')
-          .eq('user_id', session.user.id)
-          .single();
+        try {
+          // Get user with role information
+          // Type assertion to work around TypeScript issues
+          const { data: userData, error: userError } = await supabase
+            .from('user_roles')
+            .select('role')
+            .eq('user_id', session.user.id)
+            .single() as { data: { role: Role } | null, error: any };
           
-        if (!userError && userData) {
-          // Ensure the role is one of the allowed types
-          const userRole = userData.role as Role;
-          setUser({
-            ...session.user,
-            role: userRole
-          });
-        } else {
-          // Set default role as 'user' if no role found
+          if (!userError && userData) {
+            // Ensure the role is one of the allowed types
+            const userRole = userData.role as Role;
+            setUser({
+              ...session.user,
+              role: userRole
+            });
+          } else {
+            // Set default role as 'user' if no role found
+            setUser({
+              ...session.user,
+              role: 'user' as Role
+            });
+          }
+        } catch (err) {
+          console.error('Error fetching user role:', err);
+          // Set default role as 'user' if there's an error
           setUser({
             ...session.user,
             role: 'user' as Role
@@ -91,19 +101,29 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         setSession(newSession);
         
         if (event === 'SIGNED_IN' && newSession) {
-          // Get user role when signed in
-          const { data: userData } = await supabase
-            .from('user_roles')
-            .select('role')
-            .eq('user_id', newSession.user.id)
-            .single();
+          try {
+            // Get user role when signed in
+            // Type assertion to work around TypeScript issues
+            const { data: userData } = await supabase
+              .from('user_roles')
+              .select('role')
+              .eq('user_id', newSession.user.id)
+              .single() as { data: { role: Role } | null, error: any };
+              
+            const userRole = (userData?.role || 'user') as Role;
             
-          const userRole = (userData?.role || 'user') as Role;
-          
-          setUser({
-            ...newSession.user,
-            role: userRole
-          });
+            setUser({
+              ...newSession.user,
+              role: userRole
+            });
+          } catch (err) {
+            console.error('Error fetching user role:', err);
+            // Set default role if there's an error
+            setUser({
+              ...newSession.user,
+              role: 'user' as Role
+            });
+          }
           
           toast({
             title: "Welcome back!",
