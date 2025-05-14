@@ -14,6 +14,7 @@ import ServicePage from "./pages/ServicePage";
 import Admin from "./pages/Admin";
 import TravelAssistant from "./pages/TravelAssistant";
 import { AuthProvider } from "@/contexts/AuthContext";
+import Index from "./pages/Index";
 
 // Configure the query client with error handling
 const queryClient = new QueryClient({
