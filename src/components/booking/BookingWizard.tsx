@@ -13,6 +13,9 @@ import BookingSummary from './BookingSummary';
 const BookingWizard = () => {
   const { currentStep, setCurrentStep, bookingCompleted } = useBooking();
 
+  const nextStep = () => setCurrentStep(currentStep + 1);
+  const prevStep = () => setCurrentStep(currentStep - 1);
+
   const renderStep = () => {
     if (bookingCompleted) {
       return <BookingConfirmation />;
@@ -20,19 +23,19 @@ const BookingWizard = () => {
     
     switch (currentStep) {
       case 1:
-        return <TicketTypeStep onNext={() => setCurrentStep(2)} />;
+        return <TicketTypeStep onNext={nextStep} />;
       case 2:
-        return <BookingModeStep onNext={() => setCurrentStep(3)} onBack={() => setCurrentStep(1)} />;
+        return <BookingModeStep onNext={nextStep} onBack={prevStep} />;
       case 3:
-        return <JourneyDetailsStep onNext={() => setCurrentStep(4)} onBack={() => setCurrentStep(2)} />;
+        return <JourneyDetailsStep onNext={nextStep} onBack={prevStep} />;
       case 4:
-        return <PassengerDetailsStep onNext={() => setCurrentStep(5)} onBack={() => setCurrentStep(3)} />;
+        return <PassengerDetailsStep onNext={nextStep} onBack={prevStep} />;
       case 5:
-        return <PaymentMethodStep onNext={() => setCurrentStep(6)} onBack={() => setCurrentStep(4)} />;
+        return <PaymentMethodStep onNext={nextStep} onBack={prevStep} />;
       case 6:
-        return <BookingSummary onBack={() => setCurrentStep(5)} />;
+        return <BookingSummary onBack={prevStep} />;
       default:
-        return <TicketTypeStep onNext={() => setCurrentStep(2)} />;
+        return <TicketTypeStep onNext={nextStep} />;
     }
   };
 

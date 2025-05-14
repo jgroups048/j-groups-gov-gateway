@@ -22,6 +22,8 @@ const formSchema = z.object({
   mobile: z.string().regex(/^[6-9]\d{9}$/, { message: 'Please enter a valid 10-digit mobile number.' }),
 });
 
+type FormValues = z.infer<typeof formSchema>;
+
 // Ticket class options
 const trainClasses = [
   { value: 'sleeper', label: 'Sleeper Class' },
@@ -35,29 +37,34 @@ const flightClasses = [
   { value: 'business', label: 'Business Class' },
 ];
 
-const PassengerDetailsStep = () => {
+interface PassengerDetailsStepProps {
+  onNext: () => void;
+  onBack: () => void;
+}
+
+const PassengerDetailsStep = ({ onNext, onBack }: PassengerDetailsStepProps) => {
   const { bookingData, updateBooking, goToNextStep } = useBooking();
   
   // Determine classes based on booking mode
   const classOptions = bookingData.bookingMode === 'train' ? trainClasses : flightClasses;
   
   // Set up the form with default values from context
-  const form = useForm({
+  const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       fullName: bookingData.passengerDetails?.fullName || '',
-      age: bookingData.passengerDetails?.age?.toString() || '',
+      age: bookingData.passengerDetails?.age ? String(bookingData.passengerDetails.age) : '',
       gender: bookingData.passengerDetails?.gender || '',
       travelClass: bookingData.passengerDetails?.travelClass || '',
       mobile: bookingData.passengerDetails?.mobile || '',
     },
   });
 
-  const onSubmit = (data: z.infer<typeof formSchema>) => {
+  const onSubmit = (data: FormValues) => {
     // Parse age to number before saving
     const passengerDetails = {
       ...data,
-      age: parseInt(data.age, 10)  // Convert string to number
+      age: parseInt(data.age, 10)
     };
     
     updateBooking({ passengerDetails });
@@ -177,7 +184,7 @@ const PassengerDetailsStep = () => {
             <Button
               type="button"
               variant="outline"
-              onClick={() => goToNextStep(-1)}
+              onClick={onBack}
             >
               Back
             </Button>

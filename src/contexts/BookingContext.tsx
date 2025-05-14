@@ -10,6 +10,10 @@ type BookingContextType = {
   setCurrentStep: (step: number) => void;
   bookingCompleted: boolean;
   completeBooking: () => void;
+  // Added properties to match what's used in PassengerDetailsStep
+  bookingData: Partial<BookingDetails>;
+  updateBooking: (details: Partial<BookingDetails>) => void;
+  goToNextStep: (step?: number) => void;
 };
 
 const BookingContext = createContext<BookingContextType | undefined>(undefined);
@@ -31,10 +35,17 @@ export const BookingProvider = ({ children }: { children: ReactNode }) => {
     setBookingDetails(prev => ({ ...prev, ...details }));
   };
 
+  // Alias for compatibility with existing components
+  const updateBooking = updateBookingDetails;
+
   const resetBooking = () => {
     setBookingDetails({});
     setCurrentStep(1);
     setBookingCompleted(false);
+  };
+
+  const goToNextStep = (stepIncrement: number = 1) => {
+    setCurrentStep(prev => prev + stepIncrement);
   };
 
   const completeBooking = () => {
@@ -61,6 +72,10 @@ export const BookingProvider = ({ children }: { children: ReactNode }) => {
         setCurrentStep,
         bookingCompleted,
         completeBooking,
+        // Add aliased properties for compatibility
+        bookingData: bookingDetails,
+        updateBooking,
+        goToNextStep,
       }}
     >
       {children}
