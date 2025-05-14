@@ -1,60 +1,100 @@
-
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Download, ExternalLink } from 'lucide-react';
+import { useAuth } from '@/contexts/AuthContext';
+import { Menu, X, User, LogIn, LogOut, Home, Info, Package, Plane, Train } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { useToast } from '@/hooks/use-toast';
-import { useIsMobile } from '@/hooks/use-mobile';
 
-const Header: React.FC = () => {
-  const { toast } = useToast();
-  const isMobile = useIsMobile();
+const Header = () => {
+  const { user, signOut } = useAuth();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  const handleDownload = () => {
-    // Show a toast notification
-    toast({
-      title: "Downloading App",
-      description: "Your download will start automatically. Once downloaded, you can install it for app mode.",
-      duration: 5000,
-    });
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
   };
 
+  const closeMenu = () => {
+    setIsMenuOpen(false);
+  };
+
+  const navItems = [
+    { name: 'Home', path: '/', icon: <Home className="w-5 h-5" /> },
+    { name: 'Services', path: '/services', icon: <Package className="w-5 h-5" /> },
+    { name: 'Travel', path: '/travel', icon: <Train className="w-5 h-5" /> },
+    { name: 'About', path: '/about', icon: <Info className="w-5 h-5" /> },
+  ];
+
   return (
-    <header className="sticky top-0 z-10 bg-gradient-to-r from-blue-700 to-blue-800 text-white shadow-md">
-      <div className="container mx-auto px-4 py-3">
-        <div className="flex justify-between items-center">
-          <div className="flex items-center">
-            <h1 className="text-xl md:text-2xl lg:text-3xl font-bold animate-[glow_2s_ease-in-out_infinite] relative">
-              <Link to="/" className="flex items-center">
-                <span className="mr-2">🏛️</span>
-                <span className="bg-clip-text text-transparent bg-gradient-to-r from-white to-blue-100">
-                  J GROUPS Enterprises
-                </span>
-              </Link>
-              <div className="absolute h-1 w-1/2 bottom-0 left-0 bg-gradient-to-r from-transparent to-white/40 rounded"></div>
-            </h1>
-            {!isMobile && (
-              <p className="ml-4 text-sm text-blue-100">Your Trusted Digital Seva Partner Since 2020</p>
-            )}
-          </div>
-          <div className="flex items-center space-x-2 sm:space-x-4">
-            <Link to="/about" className="bg-blue-600/80 hover:bg-blue-500 px-2 sm:px-3 py-1 rounded-md text-xs sm:text-sm font-medium transition-colors flex items-center">
-              <ExternalLink className="h-3 w-3 sm:h-3.5 sm:w-3.5 mr-1" />
-              About Us
+    <header className="bg-white shadow-md sticky top-0 z-50">
+      <div className="container mx-auto px-4 py-3 flex items-center justify-between">
+        <Link to="/" className="flex items-center text-xl font-semibold text-blue-700">
+          J Groups
+        </Link>
+
+        <div className="hidden md:flex items-center space-x-6">
+          {navItems.map((item) => (
+            <Link key={item.name} to={item.path} className="flex items-center text-gray-700 hover:text-blue-700 transition-colors">
+              {item.icon}
+              <span className="ml-1">{item.name}</span>
             </Link>
-            <a 
-              href="https://raw.githubusercontent.com/jgroups048/j-groups-gov-gateway/main/J%20GROUPS%20Enterprises_1_1.0.apk"
-              download="J_GROUPS_Enterprises.apk"
-              onClick={handleDownload}
-              className="bg-blue-500 hover:bg-blue-600 text-white font-medium px-2 sm:px-3 py-1 sm:py-2 rounded-md transition-colors flex items-center"
-            >
-              <Download className="h-3 w-3 sm:h-4 sm:w-4 mr-1" />
-              <span className="hidden sm:inline">Download App</span>
-              <span className="sm:hidden">App</span>
-            </a>
-          </div>
+          ))}
+
+          {user ? (
+            <div className="flex items-center space-x-4">
+              <Link to="/dashboard" className="flex items-center text-gray-700 hover:text-blue-700 transition-colors">
+                <User className="w-5 h-5" />
+                <span className="ml-1">Dashboard</span>
+              </Link>
+              <Button variant="outline" size="sm" onClick={signOut}>
+                <LogOut className="w-4 h-4 mr-2" />
+                Sign Out
+              </Button>
+            </div>
+          ) : (
+            <Link to="/admin" className="flex items-center text-gray-700 hover:text-blue-700 transition-colors">
+              <LogIn className="w-5 h-5" />
+              <span className="ml-1">Sign In</span>
+            </Link>
+          )}
+        </div>
+
+        <div className="md:hidden">
+          <Button variant="ghost" size="icon" onClick={toggleMenu}>
+            {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+          </Button>
         </div>
       </div>
+
+      {/* Mobile Menu */}
+      {isMenuOpen && (
+        <div className="bg-gray-50 border-b py-2">
+          <div className="container mx-auto px-4 flex flex-col space-y-3">
+            {navItems.map((item) => (
+              <Link key={item.name} to={item.path} className="flex items-center text-gray-700 hover:text-blue-700 transition-colors py-2" onClick={closeMenu}>
+                {item.icon}
+                <span className="ml-2">{item.name}</span>
+              </Link>
+            ))}
+
+            {user ? (
+              <>
+                <Link to="/dashboard" className="flex items-center text-gray-700 hover:text-blue-700 transition-colors py-2" onClick={closeMenu}>
+                  <User className="w-5 h-5" />
+                  <span className="ml-2">Dashboard</span>
+                </Link>
+                <Button variant="outline" size="sm" onClick={() => { signOut(); closeMenu(); }} className="w-full justify-center">
+                  <LogOut className="w-4 h-4 mr-2" />
+                  Sign Out
+                </Button>
+              </>
+            ) : (
+              <Link to="/admin" className="flex items-center text-gray-700 hover:text-blue-700 transition-colors py-2" onClick={closeMenu}>
+                <LogIn className="w-5 h-5" />
+                <span className="ml-2">Sign In</span>
+              </Link>
+            )}
+          </div>
+        </div>
+      )}
     </header>
   );
 };

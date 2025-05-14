@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
@@ -12,6 +11,7 @@ import SplashScreen from "./components/SplashScreen";
 import Dashboard from "./pages/Dashboard";
 import ServicePage from "./pages/ServicePage";
 import Admin from "./pages/Admin";
+import TravelAssistant from "./pages/TravelAssistant";
 
 // Configure the query client with error handling
 const queryClient = new QueryClient({
@@ -77,6 +77,7 @@ const AppRoutes = () => {
           <Route path="/admin" element={<Admin />} />
           <Route path="/service/:serviceId" element={<ServicePage />} />
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/travel" element={<TravelAssistant />} />
           
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="/index.html" element={<Navigate to="/" replace />} />
