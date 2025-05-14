@@ -1,271 +1,190 @@
 
-import React, { useState } from 'react';
-import { useBooking } from '@/contexts/BookingContext';
+import React from 'react';
+import { useForm } from 'react-hook-form';
+import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { Button } from '@/components/ui/button';
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Gender, Passenger, TravelClass } from '@/types/bookingTypes';
-import { PlusCircle, Trash2 } from 'lucide-react';
-import { 
-  Select, 
-  SelectContent, 
-  SelectItem, 
-  SelectTrigger, 
-  SelectValue 
-} from "@/components/ui/select";
+import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { useBooking } from '@/contexts/BookingContext';
 
-interface PassengerDetailsStepProps {
-  onNext: () => void;
-  onBack: () => void;
-}
+// Define the form schema with validation
+const formSchema = z.object({
+  fullName: z.string().min(3, { message: 'Name must be at least 3 characters.' }),
+  age: z.string().refine((val) => {
+    const num = parseInt(val, 10);
+    return !isNaN(num) && num > 0 && num < 120;
+  }, { message: 'Please enter a valid age.' }),
+  gender: z.string().min(1, { message: 'Please select your gender.' }),
+  travelClass: z.string().min(1, { message: 'Please select a travel class.' }),
+  mobile: z.string().regex(/^[6-9]\d{9}$/, { message: 'Please enter a valid 10-digit mobile number.' }),
+});
 
-const PassengerDetailsStep = ({ onNext, onBack }: PassengerDetailsStepProps) => {
-  const { bookingDetails, updateBookingDetails } = useBooking();
-  const [passengers, setPassengers] = useState<Partial<Passenger>[]>(
-    bookingDetails.passengers?.length ? bookingDetails.passengers : [{ fullName: '', age: undefined, gender: undefined }]
-  );
-  const [travelClass, setTravelClass] = useState<TravelClass | undefined>(
-    bookingDetails.travelClass
-  );
-  const [mobileNumber, setMobileNumber] = useState(bookingDetails.mobileNumber || '');
-  const [errors, setErrors] = useState<{ [key: string]: string }>({});
+// Ticket class options
+const trainClasses = [
+  { value: 'sleeper', label: 'Sleeper Class' },
+  { value: 'ac3', label: '3rd AC' },
+  { value: 'ac2', label: '2nd AC' },
+  { value: 'ac1', label: '1st AC' },
+];
 
-  const getAvailableTravelClasses = () => {
-    if (bookingDetails.ticketType === 'Train') {
-      return [
-        { value: 'Sleeper', label: 'Sleeper Class' },
-        { value: 'AC', label: 'AC Class' },
-        { value: 'First Class', label: 'First Class' },
-      ];
-    } else {
-      return [
-        { value: 'Economy', label: 'Economy Class' },
-        { value: 'Business', label: 'Business Class' },
-        { value: 'First Class', label: 'First Class' },
-      ];
-    }
-  };
+const flightClasses = [
+  { value: 'economy', label: 'Economy Class' },
+  { value: 'business', label: 'Business Class' },
+];
 
-  const handleAddPassenger = () => {
-    setPassengers([...passengers, { fullName: '', age: undefined, gender: undefined }]);
-  };
+const PassengerDetailsStep = () => {
+  const { bookingData, updateBooking, goToNextStep } = useBooking();
+  
+  // Determine classes based on booking mode
+  const classOptions = bookingData.bookingMode === 'train' ? trainClasses : flightClasses;
+  
+  // Set up the form with default values from context
+  const form = useForm({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      fullName: bookingData.passengerDetails?.fullName || '',
+      age: bookingData.passengerDetails?.age?.toString() || '',
+      gender: bookingData.passengerDetails?.gender || '',
+      travelClass: bookingData.passengerDetails?.travelClass || '',
+      mobile: bookingData.passengerDetails?.mobile || '',
+    },
+  });
 
-  const handleRemovePassenger = (index: number) => {
-    if (passengers.length > 1) {
-      const newPassengers = [...passengers];
-      newPassengers.splice(index, 1);
-      setPassengers(newPassengers);
-    }
-  };
-
-  const handlePassengerChange = (
-    index: number,
-    field: keyof Passenger,
-    value: string | number
-  ) => {
-    const updatedPassengers = [...passengers];
-    if (field === 'age' && typeof value === 'string') {
-      updatedPassengers[index] = {
-        ...updatedPassengers[index],
-        [field]: value ? parseInt(value) : undefined,
-      };
-    } else {
-      updatedPassengers[index] = {
-        ...updatedPassengers[index],
-        [field]: value,
-      };
-    }
-    setPassengers(updatedPassengers);
-  };
-
-  const validatePassengers = () => {
-    let isValid = true;
-    const newErrors: { [key: string]: string } = {};
+  const onSubmit = (data: z.infer<typeof formSchema>) => {
+    // Parse age to number before saving
+    const passengerDetails = {
+      ...data,
+      age: parseInt(data.age, 10)  // Convert string to number
+    };
     
-    passengers.forEach((passenger, index) => {
-      if (!passenger.fullName) {
-        newErrors[`name-${index}`] = 'Name is required';
-        isValid = false;
-      }
-      
-      if (!passenger.age) {
-        newErrors[`age-${index}`] = 'Age is required';
-        isValid = false;
-      }
-      
-      if (!passenger.gender) {
-        newErrors[`gender-${index}`] = 'Gender is required';
-        isValid = false;
-      }
-    });
-    
-    if (!travelClass) {
-      newErrors.travelClass = 'Please select a travel class';
-      isValid = false;
-    }
-    
-    if (!mobileNumber || !/^\d{10}$/.test(mobileNumber)) {
-      newErrors.mobile = 'Please enter a valid 10-digit mobile number';
-      isValid = false;
-    }
-    
-    setErrors(newErrors);
-    return isValid;
-  };
-
-  const handleNext = () => {
-    if (!validatePassengers()) {
-      return;
-    }
-    
-    // Cast passengers to ensure all fields are filled
-    const validPassengers = passengers.map(p => ({
-      fullName: p.fullName || '',
-      age: p.age || 0,
-      gender: p.gender as Gender
-    }));
-    
-    updateBookingDetails({
-      passengers: validPassengers,
-      travelClass: travelClass as TravelClass,
-      mobileNumber
-    });
-    
-    onNext();
+    updateBooking({ passengerDetails });
+    goToNextStep();
   };
 
   return (
     <div className="space-y-6">
-      <h2 className="text-2xl font-semibold text-center text-gray-800">
-        Enter Passenger Details
-      </h2>
+      <div>
+        <h3 className="text-lg font-semibold mb-2">Passenger Details</h3>
+        <p className="text-gray-600 text-sm">Please enter the passenger information below.</p>
+      </div>
       
-      {passengers.map((passenger, index) => (
-        <div key={index} className="border p-4 rounded-md space-y-3">
-          <div className="flex justify-between items-center">
-            <h3 className="font-medium">Passenger {index + 1}</h3>
-            {passengers.length > 1 && (
-              <Button 
-                variant="ghost" 
-                size="sm" 
-                onClick={() => handleRemovePassenger(index)}
-              >
-                <Trash2 className="w-4 h-4 text-red-500" />
-              </Button>
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+          <FormField
+            control={form.control}
+            name="fullName"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Full Name (as per ID)</FormLabel>
+                <FormControl>
+                  <Input placeholder="Enter passenger name" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
             )}
+          />
+          
+          <div className="grid grid-cols-2 gap-4">
+            <FormField
+              control={form.control}
+              name="age"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Age</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Age" {...field} type="number" min="1" max="120" />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            
+            <FormField
+              control={form.control}
+              name="gender"
+              render={({ field }) => (
+                <FormItem className="space-y-3">
+                  <FormLabel>Gender</FormLabel>
+                  <FormControl>
+                    <RadioGroup
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                      className="flex space-x-4"
+                    >
+                      <FormItem className="flex items-center space-x-2">
+                        <FormControl>
+                          <RadioGroupItem value="male" />
+                        </FormControl>
+                        <FormLabel className="font-normal">Male</FormLabel>
+                      </FormItem>
+                      <FormItem className="flex items-center space-x-2">
+                        <FormControl>
+                          <RadioGroupItem value="female" />
+                        </FormControl>
+                        <FormLabel className="font-normal">Female</FormLabel>
+                      </FormItem>
+                    </RadioGroup>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
           </div>
           
-          <div className="space-y-3">
-            <div>
-              <Label htmlFor={`name-${index}`}>Full Name</Label>
-              <Input
-                id={`name-${index}`}
-                value={passenger.fullName || ''}
-                onChange={(e) => handlePassengerChange(index, 'fullName', e.target.value)}
-                placeholder="Enter full name"
-                className={errors[`name-${index}`] ? 'border-red-500' : ''}
-              />
-              {errors[`name-${index}`] && (
-                <p className="text-red-500 text-xs mt-1">{errors[`name-${index}`]}</p>
-              )}
-            </div>
-            
-            <div className="grid grid-cols-2 gap-3">
-              <div>
-                <Label htmlFor={`age-${index}`}>Age</Label>
-                <Input
-                  id={`age-${index}`}
-                  type="number"
-                  value={passenger.age || ''}
-                  onChange={(e) => handlePassengerChange(index, 'age', e.target.value)}
-                  placeholder="Enter age"
-                  min={1}
-                  max={120}
-                  className={errors[`age-${index}`] ? 'border-red-500' : ''}
-                />
-                {errors[`age-${index}`] && (
-                  <p className="text-red-500 text-xs mt-1">{errors[`age-${index}`]}</p>
-                )}
-              </div>
-              
-              <div>
-                <Label htmlFor={`gender-${index}`}>Gender</Label>
-                <Select
-                  value={passenger.gender}
-                  onValueChange={(value) => handlePassengerChange(index, 'gender', value)}
-                >
-                  <SelectTrigger id={`gender-${index}`} className={errors[`gender-${index}`] ? 'border-red-500' : ''}>
-                    <SelectValue placeholder="Select gender" />
-                  </SelectTrigger>
+          <FormField
+            control={form.control}
+            name="travelClass"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Travel Class</FormLabel>
+                <Select onValueChange={field.onChange} defaultValue={field.value}>
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select travel class" />
+                    </SelectTrigger>
+                  </FormControl>
                   <SelectContent>
-                    <SelectItem value="Male">Male</SelectItem>
-                    <SelectItem value="Female">Female</SelectItem>
-                    <SelectItem value="Other">Other</SelectItem>
+                    {classOptions.map((option) => (
+                      <SelectItem key={option.value} value={option.value}>
+                        {option.label}
+                      </SelectItem>
+                    ))}
                   </SelectContent>
                 </Select>
-                {errors[`gender-${index}`] && (
-                  <p className="text-red-500 text-xs mt-1">{errors[`gender-${index}`]}</p>
-                )}
-              </div>
-            </div>
-          </div>
-        </div>
-      ))}
-      
-      <Button 
-        type="button" 
-        variant="outline" 
-        onClick={handleAddPassenger}
-        className="w-full flex items-center justify-center gap-2"
-      >
-        <PlusCircle className="w-4 h-4" />
-        Add Another Passenger
-      </Button>
-      
-      <div className="space-y-3 pt-4">
-        <div>
-          <Label htmlFor="travel-class">Select Travel Class</Label>
-          <Select
-            value={travelClass}
-            onValueChange={(value) => setTravelClass(value as TravelClass)}
-          >
-            <SelectTrigger id="travel-class" className={errors.travelClass ? 'border-red-500' : ''}>
-              <SelectValue placeholder="Select travel class" />
-            </SelectTrigger>
-            <SelectContent>
-              {getAvailableTravelClasses().map((cls) => (
-                <SelectItem key={cls.value} value={cls.value}>
-                  {cls.label}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-          {errors.travelClass && (
-            <p className="text-red-500 text-xs mt-1">{errors.travelClass}</p>
-          )}
-        </div>
-        
-        <div>
-          <Label htmlFor="mobile">Mobile Number (for ticket/OTP)</Label>
-          <Input
-            id="mobile"
-            value={mobileNumber}
-            onChange={(e) => setMobileNumber(e.target.value)}
-            placeholder="Enter 10-digit mobile number"
-            type="tel"
-            maxLength={10}
-            className={errors.mobile ? 'border-red-500' : ''}
+                <FormMessage />
+              </FormItem>
+            )}
           />
-          {errors.mobile && (
-            <p className="text-red-500 text-xs mt-1">{errors.mobile}</p>
-          )}
-        </div>
-      </div>
-      
-      <div className="flex justify-between pt-4">
-        <Button variant="outline" onClick={onBack}>Back</Button>
-        <Button onClick={handleNext}>Next</Button>
-      </div>
+          
+          <FormField
+            control={form.control}
+            name="mobile"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Mobile Number</FormLabel>
+                <FormControl>
+                  <Input placeholder="10-digit mobile number" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          
+          <div className="pt-4 flex justify-between">
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => goToNextStep(-1)}
+            >
+              Back
+            </Button>
+            <Button type="submit">Continue</Button>
+          </div>
+        </form>
+      </Form>
     </div>
   );
 };

@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
@@ -12,6 +13,7 @@ import Dashboard from "./pages/Dashboard";
 import ServicePage from "./pages/ServicePage";
 import Admin from "./pages/Admin";
 import TravelAssistant from "./pages/TravelAssistant";
+import { AuthProvider } from "@/contexts/AuthContext";
 
 // Configure the query client with error handling
 const queryClient = new QueryClient({
@@ -91,13 +93,15 @@ const AppRoutes = () => {
 const App = () => {
   return (
     <QueryClientProvider client={queryClient}>
-      <TooltipProvider>
-        <Toaster />
-        <Sonner />
-        <BrowserRouter>
-          <AppRoutes />
-        </BrowserRouter>
-      </TooltipProvider>
+      <AuthProvider>
+        <TooltipProvider>
+          <Toaster />
+          <Sonner />
+          <BrowserRouter>
+            <AppRoutes />
+          </BrowserRouter>
+        </TooltipProvider>
+      </AuthProvider>
     </QueryClientProvider>
   );
 };
