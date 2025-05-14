@@ -43,20 +43,20 @@ interface PassengerDetailsStepProps {
 }
 
 const PassengerDetailsStep = ({ onNext, onBack }: PassengerDetailsStepProps) => {
-  const { bookingData, updateBooking, goToNextStep } = useBooking();
+  const { bookingDetails, updateBookingDetails } = useBooking();
   
   // Determine classes based on booking mode
-  const classOptions = bookingData.bookingMode === 'train' ? trainClasses : flightClasses;
+  const classOptions = bookingDetails.ticketType === 'Train' ? trainClasses : flightClasses;
   
   // Set up the form with default values from context
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      fullName: bookingData.passengerDetails?.fullName || '',
-      age: bookingData.passengerDetails?.age ? String(bookingData.passengerDetails.age) : '',
-      gender: bookingData.passengerDetails?.gender || '',
-      travelClass: bookingData.passengerDetails?.travelClass || '',
-      mobile: bookingData.passengerDetails?.mobile || '',
+      fullName: bookingDetails.passengerDetails?.fullName || '',
+      age: bookingDetails.passengerDetails?.age ? String(bookingDetails.passengerDetails.age) : '',
+      gender: bookingDetails.passengerDetails?.gender || '',
+      travelClass: bookingDetails.passengerDetails?.travelClass || '',
+      mobile: bookingDetails.passengerDetails?.mobile || '',
     },
   });
 
@@ -67,8 +67,8 @@ const PassengerDetailsStep = ({ onNext, onBack }: PassengerDetailsStepProps) => 
       age: parseInt(data.age, 10)
     };
     
-    updateBooking({ passengerDetails });
-    goToNextStep();
+    updateBookingDetails({ passengerDetails });
+    onNext();
   };
 
   return (
