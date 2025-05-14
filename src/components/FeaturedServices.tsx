@@ -1,8 +1,9 @@
+
 import React from 'react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Service } from '@/data/services';
-import { Zap, MapPin, Train, Plane } from 'lucide-react';
+import { Zap, MapPin, Train, Plane, User, FileText, Receipt, GraduationCap, Landmark } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 interface FeaturedServicesProps {

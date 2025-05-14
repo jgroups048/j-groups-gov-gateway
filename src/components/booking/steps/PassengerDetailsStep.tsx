@@ -67,7 +67,7 @@ const PassengerDetailsStep = ({ onNext, onBack }: PassengerDetailsStepProps) => 
     if (field === 'age' && typeof value === 'string') {
       updatedPassengers[index] = {
         ...updatedPassengers[index],
-        [field]: parseInt(value) || '',
+        [field]: value ? parseInt(value) : undefined,
       };
     } else {
       updatedPassengers[index] = {
