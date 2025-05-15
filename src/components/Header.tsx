@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
-import { Menu, X, Home, Info, Package, Plane, Train, Download } from 'lucide-react';
+import { Menu, X, Home, Info, Package, Train, Download } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 const Header = () => {
@@ -15,6 +15,19 @@ const Header = () => {
 
   const closeMenu = () => {
     setIsMenuOpen(false);
+  };
+
+  const handleDownloadApp = () => {
+    // Direct download link to the APK file
+    const apkUrl = '/J GROUPS Enterprises_1_1.0.apk';
+    
+    // Create an anchor element to trigger the download
+    const downloadLink = document.createElement('a');
+    downloadLink.href = apkUrl;
+    downloadLink.download = 'J-GROUPS-Enterprises.apk';
+    document.body.appendChild(downloadLink);
+    downloadLink.click();
+    document.body.removeChild(downloadLink);
   };
 
   const navItems = [
@@ -46,7 +59,12 @@ const Header = () => {
               <span>About Us</span>
             </Link>
 
-            <Button variant="outline" size="sm" className="bg-blue-500 text-white border-white hover:bg-blue-600">
+            <Button 
+              variant="outline" 
+              size="sm" 
+              className="bg-blue-500 text-white border-white hover:bg-blue-600"
+              onClick={handleDownloadApp}
+            >
               <Download className="w-4 h-4 mr-2" />
               App
             </Button>
@@ -76,7 +94,12 @@ const Header = () => {
               <span>About Us</span>
             </Link>
             
-            <Button variant="outline" size="sm" className="justify-center bg-blue-500 text-white border-white hover:bg-blue-600">
+            <Button 
+              variant="outline" 
+              size="sm" 
+              className="justify-center bg-blue-500 text-white border-white hover:bg-blue-600"
+              onClick={handleDownloadApp}
+            >
               <Download className="w-4 h-4 mr-2" />
               Download App
             </Button>
@@ -88,3 +111,4 @@ const Header = () => {
 };
 
 export default Header;
+
