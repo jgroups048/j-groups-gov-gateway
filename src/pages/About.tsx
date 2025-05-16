@@ -1,166 +1,145 @@
 
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { ExternalLink } from 'lucide-react';
 import Header from '@/components/Header';
-import { 
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger
-} from '@/components/ui/accordion';
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Headphones, ShoppingCart, House, Briefcase, Wallet } from 'lucide-react';
+import Footer from '@/components/Footer';
+import { Card, CardContent } from '@/components/ui/card';
+import { Shield, Award, Users, CheckCircle } from 'lucide-react';
 
 const About = () => {
-  const sectors = [
-    {
-      id: 'entertainment',
-      name: 'J GROUPS Entertainment Hub',
-      description: 'An online media & creativity portal offering music, video, film promotion, and digital entertainment services.',
-      link: 'https://jgroupsentertainmenthub.netlify.app',
-      icon: Headphones,
-      online: true,
-    },
-    {
-      id: 'cart',
-      name: 'J Click to Cart',
-      description: 'A retail and commerce initiative offering a one-stop offline shopping and order placement experience.',
-      link: '',
-      icon: ShoppingCart,
-      online: false,
-    },
-    {
-      id: 'enterprises',
-      name: 'J GROUPS Enterprises',
-      description: 'A public-facing service hub operating in cyber cafés and digital kiosks. Offers access to government services, form filling, and job updates.',
-      link: '/',
-      icon: House,
-      online: true,
-      internal: true,
-    },
-    {
-      id: 'consultant',
-      name: 'J BRANDS & Consultant Services',
-      description: 'Offline consultancy for branding, business registration, startup assistance, and government project guidance.',
-      link: '',
-      icon: Briefcase,
-      online: false,
-    },
-    {
-      id: 'finance',
-      name: 'J GROUPS Finance',
-      description: 'Offline financial support and assistance for PAN, GST, loans, UDYAM registration, and more.',
-      link: '',
-      icon: Wallet,
-      online: false,
-    },
+  const milestones = [
+    { year: 2020, title: "Foundation", description: "J GROUPS Enterprises was established with a vision to simplify government services." },
+    { year: 2021, title: "Digital Expansion", description: "Launched our first AI-powered document automation tools." },
+    { year: 2022, title: "Growth & Recognition", description: "Expanded services to cover all major government documents and received industry recognition." },
+    { year: 2023, title: "AI Innovation", description: "Integrated advanced natural language processing for our Smart Automation system." },
+    { year: 2024, title: "Nationwide Presence", description: "Established operations across all Indian states with localized service support." }
+  ];
+
+  const team = [
+    { name: "Rajesh Kumar", role: "Founder & CEO", bio: "Tech entrepreneur with 15+ years in government service optimization." },
+    { name: "Priya Singh", role: "AI Research Lead", bio: "Ph.D. in Computer Science specializing in natural language processing and automation." },
+    { name: "Aditya Patel", role: "Operations Director", bio: "Expert in streamlining bureaucratic processes with public sector experience." },
+    { name: "Neha Sharma", role: "Customer Experience Head", bio: "Dedicated to making complex processes simple for all citizens." }
   ];
 
   return (
-    <div className="min-h-screen flex flex-col bg-gray-50">
+    <div className="min-h-screen flex flex-col bg-background">
       <Header />
       
-      <main className="flex-grow container mx-auto px-4 py-6">
-        <div className="max-w-4xl mx-auto">
-          {/* Header Section */}
-          <div className="text-center mb-12">
-            <h1 className="text-3xl md:text-4xl font-bold text-blue-700">J GROUPS Be Professional</h1>
-            <p className="text-lg text-gray-600 mt-2">Founded in 2020 by Vicky Jha</p>
-          </div>
-          
-          {/* Company Overview */}
-          <Card className="mb-10">
-            <CardHeader>
-              <CardTitle>Company Overview</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-gray-700">
-                J GROUPS Be Professional is a multi-sector venture started in 2020 by Vicky Jha. 
-                It is committed to delivering high-quality services across various industries including 
-                entertainment, commerce, consultancy, finance, and digital service delivery.
+      <main className="flex-grow py-16">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-16">
+            <h1 className="text-3xl md:text-5xl font-bold mb-6 heading-gradient">About J GROUPS Enterprises</h1>
+            
+            <div className="max-w-4xl mx-auto bg-card border border-border rounded-lg p-8 mt-8">
+              <p className="text-lg mb-6">
+                J GROUPS Enterprises is India's leading government service automation platform, 
+                dedicated to transforming how citizens interact with government systems.
               </p>
-            </CardContent>
-          </Card>
-          
-          {/* Sectors */}
-          <h2 className="text-2xl font-semibold text-gray-800 mb-6">Sectors of J GROUPS Be Professional</h2>
-          
-          <div className="space-y-4">
-            {sectors.map((sector) => (
-              <Card key={sector.id} className="border-l-4 border-blue-500">
-                <CardHeader className="flex flex-row items-center gap-4">
-                  <div className="bg-blue-100 p-3 rounded-full">
-                    <sector.icon className="h-6 w-6 text-blue-700" />
+              
+              <p className="text-muted-foreground mb-6">
+                Our mission is to eliminate bureaucratic friction through intelligent automation, 
+                making essential services accessible to all Indians regardless of technical knowledge or location.
+              </p>
+              
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
+                <div className="flex flex-col items-center text-center bg-background p-6 rounded-lg border border-border">
+                  <div className="bg-primary/10 p-3 rounded-full mb-4">
+                    <Shield className="h-6 w-6 text-primary" />
                   </div>
-                  <div>
-                    <CardTitle className="text-xl">{sector.name}</CardTitle>
-                    <CardDescription>
-                      {sector.online ? (
-                        <span className="text-green-600 font-medium">Online Service</span>
-                      ) : (
-                        <span className="text-amber-600 font-medium">Offline Service</span>
-                      )}
-                    </CardDescription>
+                  <h3 className="font-medium mb-2">Trusted Platform</h3>
+                  <p className="text-sm text-muted-foreground">Secure processing of over 100,000 applications monthly</p>
+                </div>
+                
+                <div className="flex flex-col items-center text-center bg-background p-6 rounded-lg border border-border">
+                  <div className="bg-primary/10 p-3 rounded-full mb-4">
+                    <Award className="h-6 w-6 text-primary" />
                   </div>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-gray-700 mb-4">{sector.description}</p>
-                  
-                  {sector.online && (
-                    <div className="mt-2">
-                      {sector.internal ? (
-                        <Button variant="outline" asChild>
-                          <Link to={sector.link}>
-                            Visit Dashboard
-                            <ExternalLink className="ml-2 h-4 w-4" />
-                          </Link>
-                        </Button>
-                      ) : (
-                        <Button variant="outline" onClick={() => window.open(sector.link, '_blank')}>
-                          Visit Website
-                          <ExternalLink className="ml-2 h-4 w-4" />
-                        </Button>
-                      )}
+                  <h3 className="font-medium mb-2">Award-Winning</h3>
+                  <p className="text-sm text-muted-foreground">Recognized for innovation in public service delivery</p>
+                </div>
+                
+                <div className="flex flex-col items-center text-center bg-background p-6 rounded-lg border border-border">
+                  <div className="bg-primary/10 p-3 rounded-full mb-4">
+                    <Users className="h-6 w-6 text-primary" />
+                  </div>
+                  <h3 className="font-medium mb-2">National Network</h3>
+                  <p className="text-sm text-muted-foreground">Supporting citizens across all 28 states and 8 union territories</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div className="mb-16">
+            <h2 className="text-2xl md:text-3xl font-bold mb-8 heading-gradient text-center">Our Journey</h2>
+            
+            <div className="max-w-4xl mx-auto">
+              <div className="relative border-l-2 border-primary/30 pl-8 ml-4">
+                {milestones.map((milestone, index) => (
+                  <div key={index} className="mb-12 relative">
+                    <div className="absolute -left-[37px] bg-background p-1">
+                      <div className="w-6 h-6 rounded-full bg-primary/20 border border-primary flex items-center justify-center">
+                        <div className="w-2 h-2 rounded-full bg-primary"></div>
+                      </div>
                     </div>
-                  )}
-                </CardContent>
-              </Card>
-            ))}
+                    
+                    <div className="bg-card border border-border rounded-lg p-6">
+                      <div className="flex items-start">
+                        <span className="text-primary font-bold text-lg mr-3">{milestone.year}</span>
+                        <div>
+                          <h3 className="font-medium mb-1">{milestone.title}</h3>
+                          <p className="text-sm text-muted-foreground">{milestone.description}</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
           
-          {/* Note */}
-          <div className="mt-10 bg-blue-50 border border-blue-200 p-4 rounded-md">
-            <h3 className="font-semibold text-blue-800">Note:</h3>
-            <p className="text-blue-700">
-              All J GROUPS services are currently available offline, except for J GROUPS Entertainment Hub
-              and J GROUPS Enterprises, which are accessible online.
-            </p>
+          <div className="mb-16">
+            <h2 className="text-2xl md:text-3xl font-bold mb-8 heading-gradient text-center">Our Leadership</h2>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              {team.map((member, index) => (
+                <Card key={index} className="bg-card border-border h-full">
+                  <CardContent className="p-6">
+                    <div className="w-16 h-16 rounded-full bg-primary/10 mx-auto mb-4 flex items-center justify-center">
+                      <span className="text-2xl">{member.name.charAt(0)}</span>
+                    </div>
+                    <h3 className="text-lg font-medium text-center mb-1">{member.name}</h3>
+                    <p className="text-sm text-primary text-center mb-3">{member.role}</p>
+                    <p className="text-sm text-muted-foreground text-center">{member.bio}</p>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
           </div>
           
-          {/* Back to Dashboard */}
-          <div className="mt-8 text-center">
-            <Button variant="default" asChild>
-              <Link to="/">
-                Back to Dashboard
-              </Link>
-            </Button>
+          <div>
+            <h2 className="text-2xl md:text-3xl font-bold mb-8 heading-gradient text-center">Our Commitments</h2>
+            
+            <div className="max-w-3xl mx-auto space-y-4">
+              {[
+                { title: "Service Excellence", description: "We're committed to providing the highest quality of service to every citizen." },
+                { title: "Digital Inclusion", description: "Making digital government services accessible to all Indians, regardless of technical knowledge." },
+                { title: "Data Privacy", description: "Maintaining the highest standards of security and privacy for all user information." },
+                { title: "Continuous Innovation", description: "Constantly improving our AI and automation systems to provide better, faster service." },
+              ].map((commitment, index) => (
+                <div key={index} className="flex bg-card border border-border rounded-lg p-4">
+                  <CheckCircle className="h-5 w-5 text-primary flex-shrink-0 mt-0.5 mr-3" />
+                  <div>
+                    <h3 className="font-medium mb-1">{commitment.title}</h3>
+                    <p className="text-sm text-muted-foreground">{commitment.description}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </main>
-
-      <footer className="bg-gray-100 border-t border-gray-200 py-4">
-        <div className="container mx-auto px-4 text-center text-gray-600 text-sm">
-          <p>© 2025 J GROUPS Enterprises. All rights reserved.</p>
-        </div>
-      </footer>
+      
+      <Footer />
     </div>
   );
 };

@@ -15,6 +15,9 @@ import Admin from "./pages/Admin";
 import TravelAssistant from "./pages/TravelAssistant";
 import { AuthProvider } from "@/contexts/AuthContext";
 import Index from "./pages/Index";
+import SmartAutomation from "./pages/SmartAutomation";
+import TrackApplication from "./pages/TrackApplication";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
 
 // Configure the query client with error handling
 const queryClient = new QueryClient({
@@ -81,6 +84,9 @@ const AppRoutes = () => {
           <Route path="/service/:serviceId" element={<ServicePage />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/travel" element={<TravelAssistant />} />
+          <Route path="/smart-automation" element={<SmartAutomation />} />
+          <Route path="/track" element={<TrackApplication />} />
+          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="/index.html" element={<Navigate to="/" replace />} />
