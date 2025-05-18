@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>J GROUPS Enterprises - Government Services Portal</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <style>
+    .carousel-slide { display: none; }
+    .carousel-slide.active { display: block; }
+    .sticky-menu { top: 0; }
+    @media (max-width: 768px) {
+      .sticky-menu { position: static !important; }
+    }
+  </style>
+</head>
+<body class="bg-gray-50 min-h-screen flex flex-col">
+  <!-- Header with Carousel -->
+  <header class="bg-blue-900 text-white relative">
+    <div class="flex items-center px-4 py-4 md:px-8">
+      <img src="public/logo192.png" alt="Logo" class="h-10 w-10 mr-3 rounded-full bg-white p-1">
+      <h1 class="text-2xl md:text-3xl font-bold tracking-wide">J GROUPS Enterprises</h1>
+    </div>
+    <div class="relative w-full max-w-4xl mx-auto mt-2">
+      <div id="carousel" class="overflow-hidden rounded-lg shadow-lg">
+        <div class="carousel-slide active">
+          <img src="https://www.digitalindia.gov.in/sites/all/themes/dit/images/banner1.jpg" alt="Slide 1" class="w-full h-48 md:h-64 object-cover">
+        </div>
+        <div class="carousel-slide">
+          <img src="https://www.india.gov.in/sites/upload_files/npi/files/banner-1.jpg" alt="Slide 2" class="w-full h-48 md:h-64 object-cover">
+        </div>
+        <div class="carousel-slide">
+          <img src="https://www.digitalindia.gov.in/sites/all/themes/dit/images/banner2.jpg" alt="Slide 3" class="w-full h-48 md:h-64 object-cover">
+        </div>
+        <div class="carousel-slide">
+          <img src="https://www.india.gov.in/sites/upload_files/npi/files/banner-2.jpg" alt="Slide 4" class="w-full h-48 md:h-64 object-cover">
+        </div>
+        <button id="prevBtn" class="absolute left-2 top-1/2 transform -translate-y-1/2 bg-blue-800 bg-opacity-70 text-white rounded-full p-2 focus:outline-none">&#8592;</button>
+        <button id="nextBtn" class="absolute right-2 top-1/2 transform -translate-y-1/2 bg-blue-800 bg-opacity-70 text-white rounded-full p-2 focus:outline-none">&#8594;</button>
+      </div>
+    </div>
+  </header>
+
+  <div class="flex flex-1 w-full max-w-7xl mx-auto mt-4 px-2 md:px-6">
+    <!-- Sticky Side Menu -->
+    <nav class="hidden md:block w-56 mr-6 sticky-menu sticky h-fit bg-white rounded-lg shadow border border-blue-100 p-4">
+      <ul class="space-y-3 text-blue-900 font-medium">
+        <li><a href="#home" class="hover:text-blue-600">Home</a></li>
+        <li><a href="#services" class="hover:text-blue-600">Services</a></li>
+        <li><a href="#travel" class="hover:text-blue-600">Travel</a></li>
+        <li><a href="#about" class="hover:text-blue-600">About</a></li>
+        <li><a href="#aboutus" class="hover:text-blue-600">About Us</a></li>
+      </ul>
+    </nav>
+    <!-- Main Content -->
+    <main class="flex-1">
+      <section id="home" class="mb-8">
+        <h2 class="text-3xl md:text-4xl font-bold text-blue-900 mb-2">Government Services Portal</h2>
+        <p class="text-gray-700 mb-4">Welcome to the one-stop portal for all your government service needs. Explore a wide range of services, get information, and complete tasks with ease.</p>
+        <div class="flex flex-wrap gap-3 mb-6">
+          <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm">Citizen Services</span>
+          <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm">Travel</span>
+          <span class="bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-sm">Documents</span>
+          <span class="bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-sm">Welfare</span>
+        </div>
+      </section>
+      <!-- Featured Services -->
+      <section id="services" class="mb-8">
+        <h3 class="text-2xl font-semibold text-blue-800 mb-4">Featured Services</h3>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div class="bg-white rounded-lg shadow border p-5 flex flex-col items-start">
+            <div class="bg-blue-100 p-3 rounded-full mb-3"><svg class="h-6 w-6 text-blue-700" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 4v16m8-8H4"/></svg></div>
+            <h4 class="font-bold text-lg mb-1">Apply for PAN Card</h4>
+            <p class="text-gray-600 mb-3">Quickly apply for a new PAN card online with guided steps.</p>
+            <button class="bg-blue-700 text-white px-4 py-2 rounded hover:bg-blue-800">Explore</button>
+          </div>
+          <div class="bg-white rounded-lg shadow border p-5 flex flex-col items-start">
+            <div class="bg-green-100 p-3 rounded-full mb-3"><svg class="h-6 w-6 text-green-700" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg></div>
+            <h4 class="font-bold text-lg mb-1">Passport Services</h4>
+            <p class="text-gray-600 mb-3">Apply, renew, or check the status of your passport easily.</p>
+            <button class="bg-blue-700 text-white px-4 py-2 rounded hover:bg-blue-800">Explore</button>
+          </div>
+          <div class="bg-white rounded-lg shadow border p-5 flex flex-col items-start">
+            <div class="bg-yellow-100 p-3 rounded-full mb-3"><svg class="h-6 w-6 text-yellow-700" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 2v4M16 2v4"/></svg></div>
+            <h4 class="font-bold text-lg mb-1">Aadhaar Update</h4>
+            <p class="text-gray-600 mb-3">Update your Aadhaar details securely and quickly.</p>
+            <button class="bg-blue-700 text-white px-4 py-2 rounded hover:bg-blue-800">Explore</button>
+          </div>
+        </div>
+      </section>
+      <!-- Searchable List -->
+      <section class="mb-8">
+        <h3 class="text-2xl font-semibold text-blue-800 mb-4">Search Government Services</h3>
+        <input type="text" id="serviceSearch" placeholder="Search for a service..." class="w-full border border-blue-200 rounded px-4 py-2 mb-4 focus:outline-none focus:ring-2 focus:ring-blue-400" onkeyup="filterServices()">
+        <ul id="serviceList" class="space-y-2">
+          <li class="bg-white border rounded px-4 py-2">Apply for PAN Card</li>
+          <li class="bg-white border rounded px-4 py-2">Passport Services</li>
+          <li class="bg-white border rounded px-4 py-2">Aadhaar Update</li>
+          <li class="bg-white border rounded px-4 py-2">Birth Certificate</li>
+          <li class="bg-white border rounded px-4 py-2">Driving License</li>
+          <li class="bg-white border rounded px-4 py-2">Voter ID Registration</li>
+          <li class="bg-white border rounded px-4 py-2">Travel Booking</li>
+          <li class="bg-white border rounded px-4 py-2">Welfare Schemes</li>
+        </ul>
+      </section>
+      <!-- About Section -->
+      <section id="about" class="mb-8">
+        <h3 class="text-2xl font-semibold text-blue-800 mb-4">About the Portal</h3>
+        <p class="text-gray-700">This portal is designed to simplify access to government services, inspired by the Digital India initiative. Our mission is to make government services accessible, transparent, and efficient for all citizens.</p>
+      </section>
+    </main>
+  </div>
+  <!-- Footer -->
+  <footer class="bg-blue-900 text-white mt-8 py-6">
+    <div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center">
+      <div class="mb-3 md:mb-0">
+        <h4 class="font-bold">Contact Info</h4>
+        <p class="text-sm">Email: info@jgroupsenterprises.com | Phone: +91 9876543210</p>
+      </div>
+      <div class="mb-3 md:mb-0">
+        <h4 class="font-bold">Legal</h4>
+        <p class="text-sm">All rights reserved. For legal queries, contact us.</p>
+      </div>
+      <div>
+        <p class="text-sm">&copy; 2024 J GROUPS Enterprises</p>
+      </div>
+    </div>
+  </footer>
+  <script>
+    // Carousel functionality
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.carousel-slide');
+    const showSlide = (idx) => {
+      slides.forEach((slide, i) => {
+        slide.classList.toggle('active', i === idx);
+      });
+    };
+    document.getElementById('prevBtn').onclick = () => {
+      currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+      showSlide(currentSlide);
+    };
+    document.getElementById('nextBtn').onclick = () => {
+      currentSlide = (currentSlide + 1) % slides.length;
+      showSlide(currentSlide);
+    };
+    setInterval(() => {
+      currentSlide = (currentSlide + 1) % slides.length;
+      showSlide(currentSlide);
+    }, 5000);
+    // Search filter
+    function filterServices() {
+      const input = document.getElementById('serviceSearch').value.toLowerCase();
+      const items = document.querySelectorAll('#serviceList li');
+      items.forEach(item => {
+        item.style.display = item.textContent.toLowerCase().includes(input) ? '' : 'none';
+      });
+    }
+  </script>
+</body>
+</html>
