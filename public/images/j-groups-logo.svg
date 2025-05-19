@@ -1,0 +1,13 @@
+<svg width="300" height="200" viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="wave-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#1e3a8a"/>
+      <stop offset="100%" style="stop-color:#3b82f6"/>
+    </linearGradient>
+  </defs>
+  <path d="M0,100 Q75,150 150,100 T300,100 V200 H0 Z" fill="url(#wave-gradient)"/>
+  <text x="50%" y="45%" font-family="Arial" font-size="24" font-weight="bold" fill="white" text-anchor="middle">J GROUPS</text>
+  <text x="50%" y="60%" font-family="Arial" font-size="18" fill="white" text-anchor="middle">ENTERPRISES</text>
+  <text x="50%" y="75%" font-family="Arial" font-size="14" fill="white" text-anchor="middle">Government Services Portal</text>
+  <text x="50%" y="85%" font-family="Arial" font-size="12" fill="white" text-anchor="middle">Powered by J Groups Be Professional</text>
+</svg>

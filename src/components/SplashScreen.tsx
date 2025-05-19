@@ -12,7 +12,7 @@ const SplashScreen: React.FC<SplashScreenProps> = ({ onFinish }) => {
     const timer = setTimeout(() => {
       setVisible(false);
       onFinish();
-    }, 2000);
+    }, 5000);
 
     return () => clearTimeout(timer);
   }, [onFinish]);
@@ -20,14 +20,15 @@ const SplashScreen: React.FC<SplashScreenProps> = ({ onFinish }) => {
   if (!visible) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-gradient-to-r from-blue-700 to-blue-900 text-white">
-      <div className="animate-[float_2s_ease-in-out_infinite] mb-8">
-        <h1 className="text-4xl font-bold mb-2 animate-[glow_2s_ease-in-out_infinite]">
-          J GROUPS Enterprises
-        </h1>
-      </div>
-      <p className="text-lg mt-4">Government Services Portal</p>
-      <p className="text-sm mt-8">Powered by J GROUPS Be Professional</p>
+    <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-blue-900 text-white">
+      <div className="text-center">
+        <img
+          src="/images/splash-screen.jpg"
+          alt="J GROUPS Enterprises"
+          className="w-64 h-auto mb-4 mx-auto animate-[fadeIn_1s_ease-in-out]"
+        />
+        <h1 className="text-2xl font-bold animate-[fadeIn_1s_ease-in-out_0.5s_forwards] opacity-0">Government Services Portal</h1>
+        <p className="text-lg mt-2 animate-[fadeIn_1s_ease-in-out_0.7s_forwards] opacity-0">Powered by J GROUPS Be Professional</p>
     </div>
   );
 };

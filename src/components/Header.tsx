@@ -40,7 +40,7 @@ const Header = () => {
     <header className="bg-card/80 backdrop-blur-sm shadow-md sticky top-0 z-50 border-b border-border/50">
       <div className="container mx-auto px-4 py-3 flex items-center justify-between">
         <Link to="/" className="flex items-center text-xl font-semibold text-foreground">
-          <span className="mr-2 text-2xl">🏛️</span>
+          <img src="/images/j-groups-logo.jpg" alt="J GROUPS Enterprises" className="h-10 mr-2 rounded" />
           <span className="text-2xl">J GROUPS Enterprises</span>
         </Link>
 
