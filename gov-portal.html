@@ -356,6 +356,23 @@
     </div>
   </footer>
   <script>
+    // Splash screen timing
+    document.addEventListener('DOMContentLoaded', function() {
+      setTimeout(function() {
+        const splashScreen = document.getElementById('splash-screen');
+        const mainContent = document.getElementById('main-content');
+        
+        // Fade out splash screen
+        splashScreen.style.opacity = '0';
+        
+        // After transition completes, hide splash and show main content
+        setTimeout(function() {
+          splashScreen.style.display = 'none';
+          mainContent.style.display = 'flex';
+        }, 500);
+      }, 3000); // Show splash screen for 3 seconds
+    });
+
     // Carousel functionality
     let currentSlide = 0;
     const slides = document.querySelectorAll('.carousel-slide');
@@ -381,13 +398,16 @@
     function filterServices() {
       const input = document.getElementById('serviceSearch').value.toLowerCase();
       const items = document.querySelectorAll('#serviceList li');
+      let visibleCount = 0;
+      
       items.forEach(item => {
         const itemText = item.textContent.trim().toLowerCase();
         const isVisible = itemText.includes(input);
         item.style.display = isVisible ? '' : 'none';
         
-        // Add transition effect
         if (isVisible) {
+          visibleCount++;
+          // Add transition effect
           item.classList.add('border-blue-300');
           setTimeout(() => {
             item.classList.remove('border-blue-300');
@@ -396,10 +416,9 @@
       });
       
       // Show a message if no results found
-      const visibleItems = document.querySelectorAll('#serviceList li[style=""]');
       const noResultsMsg = document.getElementById('noResultsMsg');
       
-      if (visibleItems.length === 0 && input !== '') {
+      if (visibleCount === 0 && input !== '') {
         if (!noResultsMsg) {
           const msg = document.createElement('p');
           msg.id = 'noResultsMsg';
@@ -409,88 +428,6 @@
         }
       } else if (noResultsMsg) {
         noResultsMsg.remove();
-      }
-    }
-    
-    // Mobile menu toggle
-    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-    const mobileMenu = document.getElementById('mobileMenu');
-    
-    mobileMenuBtn.addEventListener('click', () => {
-      mobileMenu.classList.toggle('active');
-    });
-    
-    // Close mobile menu when clicking on a link
-    const mobileMenuLinks = mobileMenu.querySelectorAll('a');
-    mobileMenuLinks.forEach(link => {
-      link.addEventListener('click', () => {
-        mobileMenu.classList.remove('active');
-      });
-    });
-    
-    // Add hover effect to service cards
-    const serviceCards = document.querySelectorAll('.service-card');
-    serviceCards.forEach(card => {
-      card.addEventListener('mouseenter', () => {
-        card.classList.add('shadow-lg');
-      });
-      card.addEventListener('mouseleave', () => {
-        card.classList.remove('shadow-lg');
-      });
-    });
-  </script>
-  </div> <!-- End of main-content -->
-
-  <script>
-    // Splash screen timing
-    document.addEventListener('DOMContentLoaded', function() {
-      setTimeout(function() {
-        const splashScreen = document.getElementById('splash-screen');
-        const mainContent = document.getElementById('main-content');
-        
-        // Fade out splash screen
-        splashScreen.style.opacity = '0';
-        
-        // After transition completes, hide splash and show main content
-        setTimeout(function() {
-          splashScreen.style.display = 'none';
-          mainContent.style.display = 'flex';
-        }, 500);
-      }, 5000); // Show splash screen for 5 seconds
-    });
-
-    // Carousel functionality
-    let currentSlide = 0;
-    const slides = document.querySelectorAll('.carousel-slide');
-    const prevBtn = document.getElementById('prevBtn');
-    const nextBtn = document.getElementById('nextBtn');
-    
-    function showSlide(n) {
-      slides.forEach(slide => slide.classList.remove('active'));
-      currentSlide = (n + slides.length) % slides.length;
-      slides[currentSlide].classList.add('active');
-    }
-    
-    prevBtn.addEventListener('click', () => showSlide(currentSlide - 1));
-    nextBtn.addEventListener('click', () => showSlide(currentSlide + 1));
-    
-    // Auto-advance slides
-    setInterval(() => showSlide(currentSlide + 1), 5000);
-    
-    // Service search functionality
-    function filterServices() {
-      const input = document.getElementById('serviceSearch');
-      const filter = input.value.toUpperCase();
-      const list = document.getElementById('serviceList');
-      const items = list.getElementsByTagName('li');
-      
-      for (let i = 0; i < items.length; i++) {
-        const text = items[i].textContent || items[i].innerText;
-        if (text.toUpperCase().indexOf(filter) > -1) {
-          items[i].style.display = '';
-        } else {
-          items[i].style.display = 'none';
-        }
       }
     }
     
