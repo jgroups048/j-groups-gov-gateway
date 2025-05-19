@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
-import { ArrowRight, FileText, UserCheck, FileCheck2, Passport, FileSignature, GraduationCap } from 'lucide-react';
+import { ArrowRight, FileText, UserCheck, FileCheck, Car, User } from 'lucide-react';
 
 interface ServiceCardProps {
   title: string;
@@ -10,17 +10,19 @@ interface ServiceCardProps {
 }
 
 const ServiceCard: React.FC<ServiceCardProps> = ({ title, description, icon, url }) => {
-  return (
-    <div className="bg-white rounded-lg shadow-md p-6 flex flex-col h-full transition-transform hover:scale-[1.02]">
-      <div className="flex items-center mb-4">
-        <div className="p-2 bg-blue-100 rounded-lg mr-4">
-          {icon}
-        </div>
-        <h3 className="text-xl font-semibold">{title}</h3>
+  const handleClick = () => {
+    window.open(url, '_blank');
+  };
+
+    return (
+    <div className="service-card">
+      <div className="service-icon">
+        {icon}
       </div>
-      <p className="text-gray-600 mb-4 flex-grow">{description}</p>
-      <Button variant="outline" className="w-full group" onClick={() => window.open(url, '_blank')}>
-        Visit Portal
+      <h3 className="text-xl font-semibold mb-2">{title}</h3>
+      <p className="text-muted-foreground mb-4 text-sm">{description}</p>
+      <Button variant="outline" onClick={handleClick} className="mt-auto group">
+        Start Now
         <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
       </Button>
     </div>
@@ -32,47 +34,42 @@ const ManualServices = () => {
     {
       title: 'Aadhaar Portal',
       description: 'Update, download, or check Aadhaar status',
-      icon: <UserCheck className="h-6 w-6 text-blue-600" />,
-      url: 'https://uidai.gov.in/'
+      icon: <User className="h-6 w-6" />,
+      url: 'https://myaadhaar.uidai.gov.in/'
     },
     {
       title: 'PAN Card Apply',
       description: 'Apply for new PAN or correct existing PAN',
-      icon: <FileText className="h-6 w-6 text-blue-600" />,
+      icon: <FileText className="h-6 w-6" />,
       url: 'https://www.onlineservices.nsdl.com/paam/endUserRegisterContact.html'
     },
     {
-      title: 'GST Portal',
-      description: 'Goods and Services Tax registration and filing',
-      icon: <FileCheck2 className="h-6 w-6 text-blue-600" />,
-      url: 'https://www.gst.gov.in/'
-    },
-    {
-      title: 'OFSS Bihar',
-      description: 'Online Facilitation System for Students - Bihar',
-      icon: <GraduationCap className="h-6 w-6 text-blue-600" />,
-      url: 'https://ofssbihar.in/'
-    },
-    {
-      title: 'E-Shram',
-      description: 'National Database of Unorganized Workers',
-      icon: <FileSignature className="h-6 w-6 text-blue-600" />,
-      url: 'https://register.eshram.gov.in/'
+      title: 'Voter ID Registration',
+      description: 'Registration, correction, and download of voter ID',
+      icon: <UserCheck className="h-6 w-6" />,
+      url: 'https://voters.eci.gov.in/'
     },
     {
       title: 'Passport Services',
       description: 'Apply for passport or check application status',
-      icon: <Passport className="h-6 w-6 text-blue-600" />,
+      icon: <FileCheck className="h-6 w-6" />,
       url: 'https://www.passportindia.gov.in/'
+    },
+    {
+      title: 'Driving License',
+      description: 'Apply for license, RC, and other vehicle services',
+      icon: <Car className="h-6 w-6" />,
+      url: 'https://parivahan.gov.in/'
+
     }
   ];
 
   return (
-    <section className="py-16 bg-gray-50" id="manual-services">
+    <section className="py-16 bg-background" id="manual-services">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">Manual Services</h2>
-          <p className="text-gray-600 max-w-2xl mx-auto">
+          <h2 className="text-3xl md:text-4xl font-bold mb-4 heading-gradient">Manual Services</h2>
+          <p className="text-muted-foreground max-w-2xl mx-auto">
             Direct access to official government portals and services. Quick links to essential document processing and registration platforms.
           </p>
         </div>
