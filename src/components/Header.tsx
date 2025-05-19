@@ -3,6 +3,8 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Menu, X, Home, Info, Package, Train, Download, MessageSquare, FileSearch } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import ImageCarousel from './ImageCarousel';
+import { carouselImages } from '@/data/carouselImages';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -38,6 +40,7 @@ const Header = () => {
 
   return (
     <header className="bg-card/80 backdrop-blur-sm shadow-md sticky top-0 z-50 border-b border-border/50">
+      <ImageCarousel images={carouselImages} />
       <div className="container mx-auto px-4 py-3 flex items-center justify-between">
         <Link to="/" className="flex items-center text-xl font-semibold text-foreground">
           <img src="/images/j-groups-logo.jpg" alt="J GROUPS Enterprises" className="h-10 mr-2 rounded" />
