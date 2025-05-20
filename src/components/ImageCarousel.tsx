@@ -1,34 +1,36 @@
 import React, { useState, useEffect } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-import { Button } from '@/components/ui/button';
 
-interface ImageCarouselProps {
-  images: Array<{
-    src: string;
-    alt: string;
-  }>;
-  autoPlayInterval?: number;
+interface CarouselImage {
+  src: string;
+  alt: string;
 }
 
-const ImageCarousel: React.FC<ImageCarouselProps> = ({ 
-  images,
-  autoPlayInterval = 5000
-}) => {
+const images: CarouselImage[] = [
+  {
+    src: '/images/digital-seva-portal.jpg',
+    alt: 'Digital Seva Portal with government emblem'
+  },
+  {
+    src: '/images/digital-india-logo.jpg',
+    alt: 'Digital India Power To Empower logo'
+  },
+  {
+    src: '/images/digital-india-6-years.jpg',
+    alt: '6 Years celebration banner'
+  }
+];
+
+const ImageCarousel: React.FC = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentIndex((prevIndex) => 
-        prevIndex === images.length - 1 ? 0 : prevIndex + 1
-      );
-    }, autoPlayInterval);
+    const interval = setInterval(() => {
+      setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
+    }, 5000);
 
-    return () => clearInterval(timer);
-  }, [images.length, autoPlayInterval]);
-
-  const goToSlide = (index: number) => {
-    setCurrentIndex(index);
-  };
+    return () => clearInterval(interval);
+  }, []);
 
   const goToPrevious = () => {
     setCurrentIndex((prevIndex) => 
@@ -37,60 +39,48 @@ const ImageCarousel: React.FC<ImageCarouselProps> = ({
   };
 
   const goToNext = () => {
-    setCurrentIndex((prevIndex) => 
-      prevIndex === images.length - 1 ? 0 : prevIndex + 1
-    );
+    setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
   };
 
   return (
-    <div className="relative w-full h-[400px] overflow-hidden">
-      {/* Image container */}
+    <div className="relative w-full h-32 overflow-hidden">
       <div 
-        className="absolute w-full h-full transition-transform duration-500 ease-out"
+        className="flex transition-transform duration-500 ease-in-out h-full"
         style={{ transform: `translateX(-${currentIndex * 100}%)` }}
       >
-        <div className="flex h-full">
-          {images.map((image, index) => (
-            <div 
-              key={index}
-              className="w-full h-full flex-shrink-0"
-            >
-              <img
-                src={image.src}
-                alt={image.alt}
-                className="w-full h-full object-cover"
-              />
-            </div>
-          ))}
-        </div>
+        {images.map((image, index) => (
+          <img
+            key={index}
+            src={image.src}
+            alt={image.alt}
+            className="w-full h-full object-cover flex-shrink-0"
+          />
+        ))}
       </div>
 
-      {/* Navigation buttons */}
-      <Button
-        variant="ghost"
-        size="icon"
-        className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white/90"
+      <button
         onClick={goToPrevious}
+        className="absolute left-2 top-1/2 -translate-y-1/2 bg-black/30 text-white p-2 rounded-full hover:bg-black/50 transition-colors"
+        aria-label="Previous image"
       >
-        <ChevronLeft className="h-6 w-6" />
-      </Button>
+        <ChevronLeft className="w-6 h-6" />
+      </button>
 
-      <Button
-        variant="ghost"
-        size="icon"
-        className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white/90"
+      <button
         onClick={goToNext}
+        className="absolute right-2 top-1/2 -translate-y-1/2 bg-black/30 text-white p-2 rounded-full hover:bg-black/50 transition-colors"
+        aria-label="Next image"
       >
-        <ChevronRight className="h-6 w-6" />
-      </Button>
+        <ChevronRight className="w-6 h-6" />
+      </button>
 
-      {/* Dots navigation */}
-      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex space-x-2">
+      <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex space-x-2">
         {images.map((_, index) => (
           <button
             key={index}
+            onClick={() => setCurrentIndex(index)}
             className={`w-2 h-2 rounded-full transition-colors ${index === currentIndex ? 'bg-white' : 'bg-white/50'}`}
-            onClick={() => goToSlide(index)}
+            aria-label={`Go to slide ${index + 1}`}
           />
         ))}
       </div>
